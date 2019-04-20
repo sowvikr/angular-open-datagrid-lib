@@ -1,0 +1,290 @@
+.light-theme.filterPanel, .red-theme.filterPanel {
+  background: white;
+  border: 1px solid #BDC3C7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: #000;
+  font-weight: 400;
+  .filterHeader {
+    border-bottom: 1px solid #BDC3C7;
+  }
+
+  .filterFooter {
+    border-top: 1px solid #BDC3C7;
+  }
+  .container:hover {
+    input ~ .checkmark {
+      background-color: inherit;
+    }
+  }
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      //background-color: #2196F3;
+      border-radius: 2px;
+      border: 1px solid #2196F3;
+    }
+
+    .checkmark {
+      background-color: #fff;
+      border: 1px solid #2196F3;
+
+    }
+  }
+}
+
+.red-theme.filterPanel {
+  background: white;
+  border: 1px solid #BDC3C7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: #000;
+  font-weight: 400;
+  .filterHeader {
+    border-bottom: 1px solid #BDC3C7;
+  }
+
+  .filterFooter {
+    border-top: 1px solid #BDC3C7;
+  }
+  .container:hover {
+    input ~ .checkmark {
+      background-color: inherit;
+    }
+  }
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      //background-color: #2196F3;
+      border-radius: 2px;
+      border: 1px solid #af0b1c;
+    }
+
+    .checkmark {
+      background-color: #fff;
+      border: 1px solid #af0b1c;
+    }
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid #af0b1c;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  .filter-icon-box {
+    i{
+      color: #af0b1c;
+    }
+  }
+
+  .clear-all{
+    border-color: #af0b1c !important;
+    color: #af0b1c !important;
+  }
+}
+
+.dark-theme.filterPanel {
+  background-color: #2d3436;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  color: #F5F5F5;
+  border: 1px solid #424242;
+  .filterHeader {
+    border-bottom: 1px solid #424242;
+    input[type=text] {
+      background-color: #262c2e;
+      color: #F5F5F5;
+      border: 1px solid initial;
+    }
+  }
+  .filterFooter {
+    border-top: 1px solid #424242;
+
+    .clear-all{
+      background: #424242;
+    }
+  }
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      border: 1px solid #2196F3;
+      border-radius: 2px;
+    }
+    .container:hover {
+      input ~ .checkmark {
+        background-color: #f5f5f5;
+      }
+    }
+    .checkmark {
+      background-color: #262c2e;
+      border: 1px solid white;
+    }
+  }
+
+  .filter-icon-box{
+    background: #1c1f20;
+    border-color: #424242;
+
+    i {
+      background: #2d3436;
+      border-color: #424242;
+    }
+  }
+}
+
+.metrial-theme.filterPanel {
+  background: whitesmoke;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.87);
+  .filterHeader {
+    border-bottom: 1px solid #e2e2e2;
+  }
+  .filterFooter {
+    button {
+      background-color: transparent;
+      border: 0;
+      color: #3f51b5;
+      font-family: inherit;
+      font-size: 12px;
+      margin: 0;
+      padding: 2px;
+    }
+  }
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      background-color: #fe5991;
+      border: 1px solid #fe5991;
+    }
+    input[type=checkbox]:checked ~ .checkmark:after {
+      //border: 1px solid white;
+    }
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid white;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    .checkmark {
+      background-color: #fff;
+      border: 1px solid black;
+    }
+  }
+}
+
+div.filterPanel {
+  /*padding: 10px;*/
+  .filter-icon-box {
+    background: #f5f7f7;
+    text-align: center;
+    line-height: 2.5;
+    border-bottom: 1px solid #BDC3C7;
+    i{
+      color: #2196F3;
+      padding: 9px 10px 10px 10px;
+      background: white;
+      border-left: 1px solid #BDC3C7;
+      border-right: 1px solid #BDC3C7;
+    }
+  }
+  .search-box {
+    padding-left: 5px;
+    padding-right: 9px;
+    input[type=text] {
+      width: 100%;
+      @media only screen and (max-width: 600px) {
+        width: 95%;
+      }
+      &::placeholder {
+        font-size: 12px;
+        padding-left: 5px;
+      }
+    }
+    line-height: 35px;
+  }
+  .checkbox-container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .options-panel {
+    max-height: 120px;
+    min-width: 40px;
+    overflow: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+  .container {
+    display: block;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 13px;
+
+    &.select-all{
+      margin-bottom: 5px;
+    }
+    input[type=checkbox] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    input[type=checkbox]:checked ~ .checkmark:after {
+      display: block;
+    }
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid #2196F3;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 12px;
+      width: 12px;
+    }
+
+  }
+
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .filterFooter {
+    padding: 2px 5px;
+    text-align: right;
+
+    .clear-all{
+      color: #2196F3;
+      font-size: 12px;
+      background: white;
+      border: 1px solid;
+      border-radius: 5px;
+    }
+  }
+
+}
+

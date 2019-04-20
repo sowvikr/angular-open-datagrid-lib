@@ -1,0 +1,270 @@
+.fa-th:before{
+  color: lightgray;
+}
+.container:focus {
+  outline: none;
+}
+
+.red-theme {
+  .cell.highlight {
+    background-color: #0091EA !important
+  }
+
+  .cell.cell-highlight-animation {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
+  .cell.selected-row {
+    background-color: rgba(0, 145, 234, 0.3);
+  }
+
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      border: 1px solid #af0b1c;
+    }
+    .checkmark {
+      background-color: #fff;
+      border: 1px solid #af0b1c;
+    }
+
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid #af0b1c;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+
+}
+
+.metrial-theme {
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      background-color: #fe5991;
+      border: 1px solid #fe5991;
+    }
+    .checkmark {
+      background-color: #fff;
+      border: 1px solid black;
+    }
+
+    .checkmark:after {
+      left: 4px;
+      top: 1px;
+      width: 3px;
+      height: 7px;
+      border: solid white;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  .cell {
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+    input[type=text] {
+      height: 38px;
+    }
+    select {
+      height: 43px;
+    }
+  }
+  .cell.highlight {
+    background-color: #fce4ec !important
+  }
+  .cell.cell-highlight-animation {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
+  .cell.selected-row {
+    border: 1px solid #3f51b5;
+  }
+
+  .cell:hover, .cell:focus {
+    outline: initial;
+  }
+}
+
+.light-theme {
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      // background-color: #2196F3;
+      border: 1px solid #2196F3;
+      border-radius: 2px;
+    }
+
+    .checkmark {
+      background-color: #fff;
+      border: 1px solid #2196F3;
+
+    }
+  }
+  .cell {
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+    input[type=text] {
+      height: 19px;
+    }
+    select {
+      height: 24px;
+    }
+  }
+
+  .cell.highlight {
+    background-color: #0091EA !important
+  }
+
+  .cell.cell-highlight-animation {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
+  .cell.selected-row {
+    background-color: rgba(0, 145, 234, 0.3);
+  }
+
+  .cell:hover, div.cell:focus {
+    /*border: 1px solid #0091EA;
+    outline: initial;*/
+  }
+}
+
+.dark-theme {
+  .container {
+    input[type=checkbox]:checked ~ .checkmark {
+      border: 1px solid #2196F3;
+      border-radius: 2px;
+    }
+    .container:hover {
+      input ~ .checkmark {
+        background-color: #f5f5f5;
+      }
+    }
+    .checkmark {
+      background-color: #262c2e;
+      border: 1px solid #f5f7f7;
+    }
+  }
+
+  .cell {
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+    input[type=text] {
+      line-height: 19px;
+      background-color: #262c2e;
+      color: #F5F5F5;
+      border: 1px solid #fff;
+      &:disabled {
+        border: 1px solid #5c5c5c;
+      }
+    }
+    select {
+      height: 24px;
+      background-color: #262c2e;
+      color: #F5F5F5;
+    }
+  }
+  .cell.highlight {
+    background-color: #00B0FF !important
+  }
+  .cell.cell-highlight-animation {
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
+  }
+
+  .cell.selected-row {
+    background-color: rgba(0, 145, 234, 0.3);
+  }
+
+  .cell:hover, .cell:focus {
+    /*border: 1px solid #0091EA;
+    outline: initial;*/
+  }
+
+}
+
+.editConatiner {
+  .cell {
+    input[type=text] {
+      width: 100%;
+    }
+
+    select {
+      margin: 0;
+      font: inherit;
+      outline: none; /* remove focus ring from Webkit */
+    }
+  }
+}
+
+.editConatiner:focus {
+  outline: none;
+}
+
+.checkbox-container {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.options-panel {
+  max-height: 100px;
+  min-width: 40px;
+  overflow: auto;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.container {
+  display: block;
+  position: relative;
+  margin-left: -6px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 13px;
+  input[type=checkbox] {
+    position: relative;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  input[type=checkbox]:checked ~ .checkmark:after {
+    display: block;
+  }
+  .checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 3px;
+    height: 7px;
+    border: solid #2196F3;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .checkmark {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    height: 12px;
+    width: 12px;
+  }
+
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}

@@ -1,0 +1,35 @@
+<div class="editConatiner" [ngClass]="theme" tabindex="0">
+  <div *ngIf="column === -3" [ngClass]="theme">
+    <i class="fa fa-th"></i>
+  </div>
+  <div *ngIf="column === -2" [ngClass]="theme" >
+    {{cellValue}}
+  </div>
+  <div *ngIf="column === -1" [ngClass]="theme" >
+    <label class="container"  (contextmenu)="onRightClick($event)">
+      <input type="checkbox" (change)="onChange($event.target.checked)" [(ngModel)]="cellValue"/>
+      <span class="checkmark"></span>
+    </label>
+  </div>
+  <div  *ngIf="column >= 0" [hidden]="isEditable" class="cell cell-highlight-animation"
+       [ngClass]="{'selected-row':isSelected, 'metrial-theme':theme==='metrial-theme', 'highlight':isCoping}">
+    <div (contextmenu)="onRightClick($event)">
+      <span [innerHTML]="renderer?renderer(row, column, cellValue, columnDefs):''"></span>
+    </div>
+  </div>
+  <div  *ngIf="column >= 0" (dblclick)="onDoubleClick()" [hidden]="!isEditable" class="cell cell-highlight-animation"
+       [ngClass]="{'selected-row':isSelected, 'highlight':isCoping}">
+    <div (contextmenu)="onRightClick($event)">
+      <span [hidden]="isEdit" [innerHTML]="renderer?renderer(row, column, cellValue, columnDefs):''"></span>
+    <span [hidden]="!isEdit" (focusout)="onFocusOut($event)" #name>
+  <select *ngIf="isCombobox" (focusout)="onFocusOut($event)" (change)="onChange($event.target.value)">
+    <option *ngFor="let item of cellData; let i = index" [value]="item.data[0]"
+            [selected]="cellValue === item.data[0]">{{item.data[0]}}
+    </option>
+  </select>
+  <input #name *ngIf="!isCombobox" type="text" [value]="cellValue" (focusout)="onFocusOut($event)"
+         (keydown)="handleEnterKey($event)" (change)="onChange($event.target.value)"/>
+</span>
+    </div>
+  </div>
+</div>

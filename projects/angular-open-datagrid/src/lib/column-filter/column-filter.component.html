@@ -1,0 +1,30 @@
+<div class="filterPanel" [ngClass]="theme">
+  <div class="filterHeader">
+    <div class="filter-icon-box">
+      <i class="feather icon-filter"></i>
+    </div>
+    <div class="search-box">
+      <input  placeholder="Search..." type="text" (keyup)="search($event.target.value)">
+    </div>
+    <div class="checkbox-container">
+      <label class="container select-all">Select All
+        <input type="checkbox" (change)="checkedColumnFilter('Select All', $event);" [(ngModel)]="selectAll"/>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="options-panel">
+    <div class="checkbox-container" *ngFor="let sname of FilterValues" [hidden]="sname.filteredOut">
+      <label class="container"><span [innerHTML] = "renderFunction?renderFunction(0,0,sname.data[0], null):sname.data[0]"></span>
+        <input type="checkbox" [value]="sname.data[0]"
+               (change)="checkedColumnFilter(sname.data[0], $event)"
+               [(ngModel)]="sname.checked"/>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="filterFooter">
+    <button type="button" class="btn clear-all" (click)="clearAll($event);">Clear Filter</button>
+  </div>
+</div>
+

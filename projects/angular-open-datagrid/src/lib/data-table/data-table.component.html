@@ -1,0 +1,197 @@
+<!--
+<div class="tableConfig">
+  <label for="rowCount">Rows: </label>
+  <select id="rowCount" (change) = "onRowSizeChange( $event, $event.target.value)">
+    <option *ngFor="let r of rowSizes" [value]="r">{{r}}</option>
+  </select>
+</div>
+-->
+<div class="table-container">
+<table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
+  <thead>
+  <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"
+      (cdkDropListSorted)="swapped($event)">
+    <th style="width: 5px"></th>
+    <th style="width: 5px"></th>
+    <th *ngIf="rowSelection" style="width: 5px"></th>
+    <th *ngFor="let item of columnDefs ; let i = index" cdkDrag
+        [ngStyle]="{'width':item.width}" [ngClass]="dragTheme"
+        resizable>
+      <div [ngClass]="dragTheme" *cdkDragPreview>
+        <div>{{item.headerName}}</div>
+      </div>
+
+      <div class="headerText" cdkDragHandle>
+        <i (click)="sortColumn(i)" class="fa fa-sort" *ngIf="item.sortState == null && item.sort"
+           aria-hidden="true"> </i>
+        <i (click)="sortColumn(i)" class="fa fa-sort-asc" *ngIf="item.sortState && item.sort" aria-hidden="true"> </i>
+        <i (click)="sortColumn(i)" class="fa fa-sort-desc"
+           *ngIf="!item.sortState && !(item.sortState == null) && item.sort" aria-hidden="true"> </i>
+        {{item.headerName}}
+      </div>
+      <span class="col-resize col-resize-cursor " grabber></span>
+    </th>
+  </tr>
+  <tr class="filter">
+    <th style="width: 5px">
+      #
+    </th>
+    <th style="width: 5px">
+
+    </th>
+    <th style="width: 5px" *ngIf="rowSelection">
+      <label class="container">
+        <input type="checkbox" (change)="checkedRowSelection($event, true);" [(ngModel)]="selectAllRows"/>
+        <span class="checkmark"></span>
+      </label>
+    </th>
+    <th *ngFor="let item of columnDefs; let i = index" [ngStyle]="{'width':item.width}">
+      <input *ngIf="item.filter" [disabled]="item.columnFilter" (keyup)="filter(i,$event.target.value)" type="text"
+             width="calc(100% - 23px)"
+             height="10"/>
+      <span>
+          <i class="fa fa-filter filter-icon" *ngIf="item.filter && item.columnFilter"
+             (click)="toggleFilter(i, $event)">
+          </i>
+        <app-column-filter (clickOutside)="item.showFilter=false" [exclude]="'.filter-icon'"
+                           [FilterValues]="columnDefs[i].uniqueFilterValues" [Column]="i"
+                           class="filterDropdown"
+                           [renderFunction]="item.cellRender"
+                           (OnFilterChange)="checkedColumnFilter($event)" *ngIf="item.filter && item.columnFilter"
+                           [hidden]="!item.showFilter" [theme]="theme" [ngStyle]="{'left.px': filterMenuX}">
+        </app-column-filter>
+        </span>
+      <span class="col-resize"></span>
+
+    </th>
+  </tr>
+  </thead>
+  <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
+         (ctrlC)="onCtrlC()"
+         (ctrlV)="onCtrlV()" cdkDropList (cdkDropListDropped)="dropRow($event)">
+  <tr *ngFor="let row of PagedRows; let rowCount = index" [hidden]="row.filteredOut" [@enterAnimation]
+      cdkDrag
+      [ngClass]="{'odd': rowCount%2 !== 0, 'even': rowCount%2===0}">
+    <div [ngClass]="dragTheme" *cdkDragPreview>
+      <div [innerHTML]="row.cellRender(rowCount, 0,row.data[0], columnDefs)"></div>
+    </div>
+    <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
+      <app-inline-edit
+        [theme]="theme"
+        [isSelected]="false"
+        [renderer]="null"
+        (rightClicked)="showContextMenu($event)"
+        (changed)="checkedRowSelection($event, false)"
+        [isEditable]="false"
+        [columnDefs]="columnDefs" [row]="rowCount"
+        [column]="-2" [cellValue]="rowCount+1"
+        [cellData]="[]">
+
+      </app-inline-edit>
+    </td>
+    <td cdkDragHandle style="width: 5px; cursor: grab" oncontextmenu="return false;" *ngIf="rowSelection"
+        class="checkBoxRow row-drag">
+      <app-inline-edit
+        [theme]="theme"
+        [isSelected]="false"
+        [renderer]="null"
+        (rightClicked)="showContextMenu($event)"
+        (changed)="checkedRowSelection($event, false)"
+        [isEditable]="false"
+        [columnDefs]="columnDefs" [row]="rowCount"
+        [column]="-3" [cellValue]=""
+        [cellData]="[]">
+
+      </app-inline-edit>
+    </td>
+    <td style="width: 5px" oncontextmenu="return false;" *ngIf="rowSelection" class="checkBoxRow">
+      <app-inline-edit
+        [theme]="theme"
+        [isSelected]="false"
+        [renderer]="null"
+        (rightClicked)="showContextMenu($event)"
+        (changed)="checkedRowSelection($event, false)"
+        [isEditable]="false"
+        [columnDefs]="columnDefs" [row]="rowCount"
+        [column]="-1" [cellValue]="row.rowSelect"
+        [cellData]="[]">
+
+      </app-inline-edit>
+    </td>
+
+    <td ctrlkeys *ngFor="let cell of row.data; let columnCount = index"
+        (click)="onClick(rowCount, columnCount, cell, $event)"
+        (mousedown)="onDragStart(rowCount, columnCount,$event)"
+        (mouseover)="onSelecting(rowCount, columnCount, cell, $event)"
+        (mouseup)="onDragEnd(rowCount, columnCount, $event)"
+        [ngStyle]="{'width':columnDefs[columnCount].width, transform:isMoving? Moved[columnCount]:'inherit'}"
+        [ngClass]="{'column-moving':(isMoving&&(Moved[columnCount]!==undefined))}"
+        oncontextmenu="return false;">
+      <app-inline-edit
+        [theme]="theme"
+        [isSelected]="contextMenuData && contextMenuData[rowCount] && !(contextMenuData[rowCount][columnCount] === undefined)"
+        [renderer]="row.cellRender"
+        (rightClicked)="showContextMenu($event)"
+        (changed)="valueChanged($event)"
+        [isEditable]="columnDefs[columnCount].isEdit"
+        [columnDefs]="columnDefs" [row]="rowCount"
+        [column]="columnCount" [cellValue]="cell"
+        [cellData]="columnDefs[columnCount].uniqueFilterValues">
+
+      </app-inline-edit>
+    </td>
+  </tr>
+  </tbody>
+  <tbody *ngIf="FilterRowCount === 0">
+  <tr>
+    <td [attr.colspan]="columnDefs.length" style="text-align: center">
+      No Data
+    </td>
+  </tr>
+  </tbody>
+
+  <tfoot *ngIf="pagination">
+  <tr>
+
+    <td [attr.colspan]="columnDefs.length+3">
+      <span class="rowCount">
+        <label for="rowCount">Rows: </label>
+        <select id="rowCount" class="page-number-selection"
+                (change)="onRowSizeChange( $event, $event.target.value)">
+          <option *ngFor="let r of rowSizes" [value]="r">{{r}}</option>
+        </select>
+      </span>
+      <span class="pagination-row">
+        <span>{{FromRecord}}</span>
+          to
+        <span>{{ToRecord}}</span> of <span>{{TotalRows}}</span>
+      </span>
+      <span class="pagination-page-summary">
+        <button type="button" class="pagination btFirst" [disabled]="CurrentPage === 1" (click)="firstPage()">
+          <i class="fa fa-angle-double-left"></i>
+        </button>
+       <button type="button" class="pagination btPrevious" [disabled]="CurrentPage === 1" (click)="previousPage()">
+         <i class="fa fa-angle-left"></i>
+       </button>Page <span>{{CurrentPage}}</span> of
+        <span ref="lbTotal">{{TotalPages}}</span>
+        <button type="button" class="pagination btNext" ref="btNext" [disabled]="CurrentPage === TotalPages"
+                (click)="nextPage()">
+          <i class="fa fa-angle-right"></i>
+        </button>
+        <button type="button" class="pagination btLast" ref="btLast" [disabled]="CurrentPage === TotalPages"
+                (click)="lastPage()">
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </span>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</div>
+<div *ngIf="contextmenu" (click)="onContextMenuOff()">
+  <app-context-menu [x]="contextmenuX" [y]="contextmenuY" [isEdit]="contextMenuIsEdit" [theme]="theme"
+                    [contextData]="contextMenuData"
+                    [rowData]="rowData"
+                    [columnData]="columnDefs"></app-context-menu>
+</div>
+
