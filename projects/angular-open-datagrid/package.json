@@ -1,6 +1,22 @@
 {
   "name": "angular-open-datagrid",
-  "version": "1.0.5",
+  "version": "1.0.7",
+  "license": "(MIT)",
+  "homepage": "https://github.com/sowvikr/angular-open-datagrid-lilb",
+  "bugs": {
+    "url": "https://github.com/sowvikr/angular-open-datagrid-lilb/issues",
+    "email": "sowvikr@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Sowvik Roy",
+      "email": "sowvikr@gmail.com"
+    },
+    {
+      "name": "Deep Hazra",
+      "email": "deephazra43@gmail.com"
+    }
+  ],
   "peerDependencies": {
     "@angular/cdk": "^7.3.7",
     "@angular/common": "^7.2.0",
