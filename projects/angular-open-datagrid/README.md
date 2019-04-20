@@ -1,24 +1,110 @@
 # AngularOpenDatagrid
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+### Install
+```npm install angular-open-datagrid --save```
+### Usage
+#### Import app.module.ts
+```javascript
+import {AngularOpenDatagridModule} from 'angular-open-datagrid';
+```
+#### Add to the Imports @NgModule
 
-## Code scaffolding
+```javascript
+imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AngularOpenDatagridModule
+  ]
+```
+#### Use
+```html
+<data-grid [pagination]="pagination" [theme]="theme"
+                [columnDefs]="columnDefs" [rowData]="rowData"></data-grid>
+```
+#### Icons
+For icons install font-awesome 
+```javascript
+npm install font-awesome --save
+```
+and include css in src/styles.scss
+```css
+@import "../node_modules/font-awesome/css/font-awesome.css";
+```
 
-Run `ng generate component component-name --project angular-open-datagrid` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project angular-open-datagrid`.
-> Note: Don't forget to add `--project angular-open-datagrid` or else it will be added to the default project in your `angular.json` file. 
+## Table Options
+### Pagination
+* **pagination [boolean]:** Enable pagination for the table.
+* **pageSize [boolean]:** Enable pagination for the table.
+### Themes
+* **theme [string]:** Themebased table. The available themes are as follows
+1. Matrial Theme (metrial-theme)
+2. Dark Theme (dark-theme)
+3. Standard Theme (standard-theme)
+4. Red Theme (red-theme)
 
-## Build
+### Column Definitions
+#### Mandatory Options
+* **headerName [string]:** Header name of the particular column
+* **field [string]:** Field name mapping to the data rows.
+* **width [number]:** Width of the column in pixel.
+* **sort [boolean]:** Column is sortable.
+* **filter [boolean]:** Can filter can be filtered.
 
-Run `ng build angular-open-datagrid` to build the project. The build artifacts will be stored in the `dist/` directory.
+```javascript
+colunDefs[          
+          headerName: 'Model',
+          field: 'model',
+          width: '40px',
+          sort: true,
+          filter: true
+]
+```
+#### Optional Options
+* **columnFilter [boolean]:** This filter is group similar values and make a Special filter for the particular column.
+* **isEdit [boolean]:** Editable the prticular column.
+* **cellRender [function(row, column, data, colDef)]:** Custom column renderer.
 
-## Publishing
 
-After building your library with `ng build angular-open-datagrid`, go to the dist folder `cd dist/angular-open-datagrid` and run `npm publish`.
+**Column Definition Example**
+```javascript
+columnDefs[{
+          headerName: 'Model',
+          field: 'model',
+          width: '40',
+          sort: true,
+          filter: true,
+          cellRender: (row, column, data, def) => {
+            return '<a href="#">' + data + '</a>';
+          }
+        },
+        {headerName: 'Make', isEdit: true, field: 'make', width: '40px'......}]
+```
 
-## Running unit tests
+### Rows
+Simply array of data.
+**Example:**
+```javascript
+rowData: [
+        {make: 'Toyota', model: 'Celica', price: 35000, 'mileage': 30, color: 'red'},
+        {make: 'Ford', model: 'Mondeo', price: 32000, 'mileage': 50, color: 'green'},
+        .............................................................................
+        ]
+```
+### Binding data with table component
+```html
+  <app-data-table [pagination]=true [theme]="standard-theme"
+                  [columnDefs]="columns" [rowData]="data"></app-data-table>
+```
 
-Run `ng test angular-open-datagrid` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Notable Features
+1. Theme based data table
+2. Column is re-arrangeable using drag-drop
+3. Row arrangable.
+4. Nice animation for visualization.
+5. Edit Cell
+6. Copy paste like Microsoft Excel.
+# Preview
+![Preview](/Datatable.png)
+# Future Timeline
+1. Ability to render remote data.
+2. Make more fast and smooth.

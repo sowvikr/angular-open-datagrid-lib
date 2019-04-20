@@ -1,6 +1,6 @@
 {
   "name": "angular-open-datagrid",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "peerDependencies": {
     "@angular/cdk": "^7.3.7",
     "@angular/common": "^7.2.0",
