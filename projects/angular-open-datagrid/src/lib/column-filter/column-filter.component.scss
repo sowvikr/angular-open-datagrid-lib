@@ -220,6 +220,15 @@ div.filterPanel {
     overflow: auto;
     padding-bottom: 5px;
     padding-top: 5px;
+
+
+    ::ng-deep a{
+      color: inherit !important;
+
+      &:visited{
+        color: inherit;
+      }
+    }
   }
   .container {
     display: block;
