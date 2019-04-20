@@ -215,7 +215,7 @@ export class DataTableComponent implements OnInit {
         uniqueItems.push(columnValue);
         column.uniqueFilterValues.push({checked: false, filteredOut: false, data: [columnValue]});
         if (!this.FilterData[columnNumber]) {
-          this.FilterData[columnNumber] = {comparator:StringUtilsService.includes , operator: 'or', values: []};
+          this.FilterData[columnNumber] = {comparator: StringUtilsService.includes, operator: 'or', values: []};
         }
         this.FilterData[columnNumber].values.push(columnValue);
       }
@@ -711,6 +711,9 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.theme) {
+      this.theme = "standard";
+    }
     this.dragTheme = this.theme + '-drag';
     this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
     this.tableDraw();
