@@ -1,9 +1,35 @@
 # AngularOpenDatagrid
 
-This was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
+### Install
+```npm install angular-open-datagrid --save```
+### Usage
+#### Import app.module.ts
+```javascript
+import {AngularOpenDatagridModule} from 'angular-open-datagrid';
+```
+#### Add to the Imports @NgModule
 
-
-
+```javascript
+imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AngularOpenDatagridModule
+  ]
+```
+#### Use
+```html
+<data-grid [pagination]="pagination" [theme]="theme"
+                [columnDefs]="columnDefs" [rowData]="rowData"></data-grid>
+```
+#### Icons
+For icons install font-awesome 
+```javascript
+npm install font-awesome --save
+```
+and include css in src/styles.scss
+```css
+@import "../node_modules/font-awesome/css/font-awesome.css";
+```
 
 ## Table Options
 ### Pagination
