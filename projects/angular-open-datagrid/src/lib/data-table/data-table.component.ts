@@ -190,6 +190,9 @@ export class DataTableComponent implements OnInit {
       this.selectRows(event.target.checked, null, true);
       return;
     }
+    if(!event.value){
+      this.selectAllRows = false;
+    }
     this.PagedRows[event.row].rowSelect = event.value;
     this.selectRows(event.value, event.row);
   }
@@ -410,6 +413,10 @@ export class DataTableComponent implements OnInit {
 
   dropRow(event) {
     moveItemInArray(this.PagedRows, event.previousIndex, event.currentIndex);
+    this.allRows(false);
+    this.contextMenuData = [];
+    this.selectAllRows = false;
+
   }
 
   valueChanged(changeValue:any) {
@@ -461,8 +468,8 @@ export class DataTableComponent implements OnInit {
   }
 
   unSelectRows() {
-    for (let i = 0; i < this.PagedRows.length; ++i) {
-      this.PagedRows[i].rowSelect = false;
+    for (let i = 0; i < this.TableRows.length; ++i) {
+      this.TableRows[i].rowSelect = false;
     }
   }
 
