@@ -34,7 +34,7 @@ and include css in src/styles.scss
 ## Table Options
 ### Pagination
 * **pagination [boolean]:** Enable pagination for the table.
-* **pageSize [boolean]:** Enable pagination for the table.
+* **pageSize [number]:** Enable pagination for the table.
 ### Themes
 * **theme [string]:** Themebased table. The available themes are as follows
 1. Matrial Theme (metrial-theme)
