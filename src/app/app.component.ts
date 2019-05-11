@@ -441,6 +441,7 @@ export class AppComponent {
       commission: ' $2,500'
     },
   ]
+  commonSearch = true;
 
 
 }

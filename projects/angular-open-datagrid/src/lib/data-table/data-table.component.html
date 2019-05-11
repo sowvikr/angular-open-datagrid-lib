@@ -6,7 +6,13 @@
   </select>
 </div>
 -->
-<div class="table-container">
+<div  class="table-container">
+  <div *ngIf="commonSearch" class="common-search" [ngClass]="theme">
+    <label>
+      Search:
+      <input type="search" placeholder="Search..." (keyup)="onCommonFilter($event.target.value)"/>
+    </label>
+  </div>
 <table class="dataTable" (click)="onContextMenuOff()" [ngClass]="theme">
   <thead>
   <tr class="header" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"

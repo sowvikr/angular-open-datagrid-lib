@@ -80,7 +80,7 @@ export class DataTableComponent implements OnInit {
   @Input() columnDefs:Column[];
   @Input() rowData;
   @Input() rowSelection:boolean = true;
-
+  @Input()commonSearch:boolean = false;
   public isMoving:boolean = false;
   private clientWidth;
   public Moved:Array<any> = [];
@@ -107,6 +107,7 @@ export class DataTableComponent implements OnInit {
   private isDragging:boolean;
   public rowSizes = [25, 50, 75, 100];
   public selectAllRows:boolean = false;
+  private commonFilterData:Array<FilterOptions>;
 
   // Convert row data to a 2D array.
   createTableData(filteredData?:Array<any>, currentPage?:number) {
@@ -190,7 +191,7 @@ export class DataTableComponent implements OnInit {
       this.selectRows(event.target.checked, null, true);
       return;
     }
-    if(!event.value){
+    if (!event.value) {
       this.selectAllRows = false;
     }
     this.PagedRows[event.row].rowSelect = event.value;
@@ -284,6 +285,11 @@ export class DataTableComponent implements OnInit {
     return filtered;
   }
 
+  /**
+   * Apply filter.
+   * @param filterData
+   * @param tableRows
+   */
   private applyFilter(filterData:Array<FilterOptions>, tableRows:Array<any>) {
     let result = this.filterService.filter(filterData, tableRows);
     this.FilterRowCount = result.FilteredRowCount;
@@ -294,6 +300,10 @@ export class DataTableComponent implements OnInit {
     this.contextMenuData = [];
   }
 
+  /**
+   * Called If any Unique valiue checkbox use for filter the column.
+   * @param filterEventArgs
+   */
   checkedColumnFilter(filterEventArgs) {
 
     this.FilterData[filterEventArgs.column].values = [];
@@ -452,6 +462,32 @@ export class DataTableComponent implements OnInit {
     this.contextmenu = true;
   }
 
+  /**
+   * On Key up common filter.
+   * @param text: String to be searched across the table data.
+   */
+  onCommonFilter(text) {
+
+    for (let i = 0; i < this.commonFilterData.length; ++i) {
+      this.commonFilterData[i] = this.commonFilterData[i] || {
+          comparator: StringUtilsService.includes,
+          operator: 'and',
+          values: []
+        };
+      this.commonFilterData[i].values = [text];
+    }
+
+    let result = this.filterService.filterCommon(this.commonFilterData, this.TableRows);
+
+
+    this.FilterRowCount = result.FilteredRowCount;
+    this.TableRows = result.tableRows;
+    this.pagedRows();
+    this.setPagedRow(1);
+    this.updateTotalPageCount();
+    this.contextMenuData = [];
+
+  }
 
   hasData(column) {
     for (let i = 0; i < this.contextMenuData.length; ++i) {
@@ -721,6 +757,8 @@ export class DataTableComponent implements OnInit {
     if (!this.theme) {
       this.theme = "standard";
     }
+
+    this.commonFilterData = new Array<FilterOptions>(this.columnDefs.length)
     this.dragTheme = this.theme + '-drag';
     this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
     this.tableDraw();

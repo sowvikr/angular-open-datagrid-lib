@@ -5,7 +5,39 @@
   min-width: 1400px;
 }
 
-.table-container{
+.common-search {
+  width: 247px;
+  position: relative;
+  height: 50px;
+  label {
+    position: absolute;
+    top: 5px;
+    padding:10px;
+  }
+}
+.light-theme.common-search{
+  background-color: white;
+  color: #000;
+}
+.dark-theme.common-search{
+  background: #1c1f20;
+  color: rgba(245,245,245,.64);
+  input[type=search] {
+    background-color: #262c2e;
+    color: #f5f5f5;
+    border: 1px solid #fff;
+  }
+}
+.red-theme.common-search{
+  color: white;
+  background: #af0b1c;
+}
+.metrial-theme.common-search{
+  background-color: white;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.table-container {
   width: 100%;
   overflow-x: auto;
   margin-bottom: 40px;
