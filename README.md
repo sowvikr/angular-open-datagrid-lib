@@ -41,7 +41,8 @@ and include css in src/styles.scss
 2. Dark Theme (dark-theme)
 3. Standard Theme (standard-theme)
 4. Red Theme (red-theme)
-
+### Search
+* **commonSearch [boolean]:** Enable common search for the table.
 ### Column Definitions
 #### Mandatory Options
 * **headerName [string]:** Header name of the particular column
