@@ -15,6 +15,16 @@ interface CellRenderer {
 }
 
 // interface for columns
+interface FilterOption {
+  value:string;
+  operator:any;
+  comparator:any;
+  isCommon?: boolean;
+}
+
+interface FilterOptions {
+  values:Array<FilterOption>
+}
 interface Column extends CellRenderer {
   headerName: string;
   field: string;
@@ -30,15 +40,10 @@ interface Column extends CellRenderer {
   showFilter?: boolean;
 }
 
-interface FilterOptions {
-  operator: string;
-  values: string[];
-  comparator: any;
-}
-
 // interface for each table row
 interface TableRow extends CellRenderer {
   filteredOut: boolean;
+  filteredOutCommon: boolean;
   pageNo?: number;
   data: Array<any>;
   rowSelect?: boolean;
@@ -107,10 +112,9 @@ export class DataTableComponent implements OnInit {
   private isDragging:boolean;
   public rowSizes = [25, 50, 75, 100];
   public selectAllRows:boolean = false;
-  private commonFilterData:Array<FilterOptions>;
 
   // Convert row data to a 2D array.
-  createTableData(filteredData?:Array<any>, currentPage?:number) {
+  createTableData1(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
     this.contextMenuData = [];
     if (!(this.rowData && this.rowData.length)) {
@@ -121,7 +125,7 @@ export class DataTableComponent implements OnInit {
         + Object.keys(this.rowData[0]).length);
     }
     for (let j = 0; j < this.rowData.length; ++j) {
-      const row:TableRow = {data: [], filteredOut: false};
+      const row:TableRow = {data: [], filteredOut: false, filteredOutCommon: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (!(filteredData && filteredData.length !== 0 && currentPage > 0)) {
           this.columnDefs[i].sortState = null;
@@ -211,17 +215,20 @@ export class DataTableComponent implements OnInit {
       return;
     }
     for (let i = 0; i < rows.length; ++i) {
-      if (rows[i].filteredOut) {
+      if (rows[i].filteredOut || rows[i].filteredOutCommon) {
         continue;
       }
       const columnValue = rows[i].data[columnNumber];
       if (uniqueItems.indexOf(columnValue) < 0) {
         uniqueItems.push(columnValue);
         column.uniqueFilterValues.push({checked: false, filteredOut: false, data: [columnValue]});
-        if (!this.FilterData[columnNumber]) {
-          this.FilterData[columnNumber] = {comparator: StringUtilsService.includes, operator: 'or', values: []};
-        }
-        this.FilterData[columnNumber].values.push(columnValue);
+
+        this.FilterData[columnNumber] = this.FilterData[columnNumber] || {values: []};
+        this.FilterData[columnNumber].values.push({
+          comparator: StringUtilsService.includes,
+          operator: FilterService.OR,
+          value: columnValue
+        });
       }
     }
     //column.uniqueFilterValues = uniqueItems;
@@ -232,7 +239,7 @@ export class DataTableComponent implements OnInit {
     let j = 0;
     for (let i = 0; i < this.TableRows.length; ++i) {
       const row:TableRow = this.TableRows[i];
-      if (row.filteredOut) {
+      if (row.filteredOut || row.filteredOutCommon) {
         row.pageNo = 0;
         continue;
       }
@@ -268,28 +275,31 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
-    this.FilterData[column] = {operator: 'or', values: [text], comparator: StringUtilsService.includes};
+    this.FilterData[column] = this.FilterData[column] || {values: []};
+    this.FilterData[column].values = [{
+      operator: FilterService.OR,
+      value: text,
+      comparator: StringUtilsService.includes
+    }];
     this.applyFilter(this.FilterData, this.TableRows);
   }
 
-  private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
-    let filtered = false;
-    if (!filterOptions[column].values.length) {
-      return true;
-    }
-    for (let i = 0; i < filterOptions[column].values.length; ++i) {
-      if (filterOptions[column].operator == 'or') {
-        filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i])
-      }
-    }
-    return filtered;
-  }
-
-  /**
-   * Apply filter.
-   * @param filterData
-   * @param tableRows
+  /*
+   private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
+   let filtered = false;
+   if (!filterOptions[column].values.length) {
+   return true;
+   }
+   for (let i = 0; i < filterOptions[column].values.length; ++i) {
+   if (filterOptions[column].operator == 'or') {
+   filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i])
+   }
+   }
+   return filtered;
+   }
    */
+
+
   private applyFilter(filterData:Array<FilterOptions>, tableRows:Array<any>) {
     let result = this.filterService.filter(filterData, tableRows);
     this.FilterRowCount = result.FilteredRowCount;
@@ -307,9 +317,12 @@ export class DataTableComponent implements OnInit {
   checkedColumnFilter(filterEventArgs) {
 
     this.FilterData[filterEventArgs.column].values = [];
-    this.FilterData[filterEventArgs.column].comparator = StringUtilsService.equals;
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
-      this.FilterData[filterEventArgs.column].values.push(filterEventArgs.filteredData[i]);
+      this.FilterData[filterEventArgs.column].values.push({
+        comparator: StringUtilsService.equals,
+        operator: FilterService.OR,
+        value: filterEventArgs.filteredData[i]
+      });
     }
     this.applyFilter(this.FilterData, this.TableRows);
   }
@@ -417,7 +430,7 @@ export class DataTableComponent implements OnInit {
     this.previousIndex = undefined;
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
-    this.createTableData(this.FilterData, this.CurrentPage);
+    this.createTableData1(this.FilterData, this.CurrentPage);
 
   }
 
@@ -462,24 +475,51 @@ export class DataTableComponent implements OnInit {
     this.contextmenu = true;
   }
 
+
+  private getCommonFiliterIndex(filterDataValue:Array<FilterOption>):number {
+    for (let i = 0; i < filterDataValue.length; ++i) {
+      if (filterDataValue[i].isCommon) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   /**
    * On Key up common filter.
    * @param text: String to be searched across the table data.
    */
   onCommonFilter(text) {
 
-    for (let i = 0; i < this.commonFilterData.length; ++i) {
-      this.commonFilterData[i] = this.commonFilterData[i] || {
-          comparator: StringUtilsService.includes,
-          operator: 'and',
-          values: []
-        };
-      this.commonFilterData[i].values = [text];
+    if (text === undefined || text === "") {
+      for (let i = 0; i < this.columnDefs.length; ++i) {
+        if(!this.FilterData[i]){
+          continue;
+        }
+        let index = this.getCommonFiliterIndex(this.FilterData[i].values);
+        if (index >= 0) {
+          this.FilterData[i].values.splice(index, 1);
+        }
+      }
     }
-
-    let result = this.filterService.filterCommon(this.commonFilterData, this.TableRows);
-
-
+    else {
+      for (let i = 0; i < this.columnDefs.length; ++i) {
+        this.FilterData[i] = this.FilterData[i] || {values: []};
+        let index = this.getCommonFiliterIndex(this.FilterData[i].values);
+        if (index >= 0) {
+          this.FilterData[i].values[index].value = text;
+        }
+        else {
+          this.FilterData[i].values.push({
+            comparator: StringUtilsService.includes,
+            operator: FilterService.AND,
+            value: text,
+            isCommon: true
+          });
+        }
+      }
+    }
+    let result = this.filterService.filterCommon(this.FilterData, this.TableRows);
     this.FilterRowCount = result.FilteredRowCount;
     this.TableRows = result.tableRows;
     this.pagedRows();
@@ -488,6 +528,7 @@ export class DataTableComponent implements OnInit {
     this.contextMenuData = [];
 
   }
+
 
   hasData(column) {
     for (let i = 0; i < this.contextMenuData.length; ++i) {
@@ -744,7 +785,7 @@ export class DataTableComponent implements OnInit {
     this.FilterRowCount = this.rowData.length;
     this.TotalRows = this.rowData.length;
     this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
-    this.createTableData();
+    this.createTableData1();
     this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
     this.ToRecord = this.pageSize;
 
@@ -758,7 +799,6 @@ export class DataTableComponent implements OnInit {
       this.theme = "standard";
     }
 
-    this.commonFilterData = new Array<FilterOptions>(this.columnDefs.length)
     this.dragTheme = this.theme + '-drag';
     this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
     this.tableDraw();

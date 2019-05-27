@@ -76,7 +76,7 @@ export class AppComponent {
       sort: true, isEdit: true, suppressMovable: true
     }
   ];
-  rowData = [
+  rowData1 = [
     {
       tradeDate: '01/01/2019',
       tradeRef: 'ADP34232',
@@ -442,6 +442,12 @@ export class AppComponent {
     },
   ]
   commonSearch = true;
+  rowData = [];
+  ngOnInit() {
+  for(let i=0;i<1500;++i){
+	  this.rowData = this.rowData.concat(this.rowData1);
+  }
+  }
 
 
 }

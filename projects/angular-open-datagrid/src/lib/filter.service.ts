@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
+
+interface FilterOption {
+  value:string;
+  operator:any;
+  comparator:any;
+  isCommon?:boolean
+}
+
 interface FilterOptions {
-  operator: string;
-  values: string[];
-  comparator: any;
+  values:Array<FilterOption>
 }
 
 interface FilteredData {
@@ -15,38 +21,57 @@ interface FilteredData {
 })
 export class FilterService {
 
-  private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
-    let filtered;
-    if (!filterOptions[column].values.length) {
-      return true;
+  static AND(b1:boolean, b2:boolean):boolean {
+    if (b1 === undefined) {
+      return b2;
     }
-    for (let i = 0; i < filterOptions[column].values.length; ++i) {
-      if (filterOptions[column].operator == 'or') {
-        filtered = !!filtered || filterOptions[column].comparator.call(this, data, filterOptions[column].values[i])
-      }
-      if (filterOptions[column].operator == 'and') {
-        filtered = !filtered && filterOptions[column].comparator.call(this, data, filterOptions[column].values[i])
-      }
+    else if (b2 === undefined) {
+      return b1;
     }
-    return filtered;
+    return b2 && b1;
   }
 
-  filterCommon(data:Array<FilterOptions>, tableRows):FilteredData {
+  static OR(b1:boolean, b2:boolean):boolean {
+    if (b1 === undefined) {
+      b1 = !!b1;
+    }
+    else if (b2 === undefined) {
+      b2 = !!b2;
+    }
+
+    return b2 || b1;
+  }
+
+  filterCommon(filterData:Array<FilterOptions>, tableRows):FilteredData {
     let FilterRowCount = 0;
     let result:FilteredData = {tableRows: [], FilteredRowCount: 0};
     for (let i = 0; i < tableRows.length; ++i) {
-      let isFiltered;
-      for (let j = 0; j < data.length; ++j) {
-        if (data[j] === undefined) {
-          //TODO: Change the INCLUDES function to the new UTILS service.
-          isFiltered = isFiltered || tableRows[i].data[j].toString().includes('');
-          continue;
-        }
-        isFiltered = isFiltered || this.getFilteredValue(j, data, tableRows[i].data[j].toString());
+      if (tableRows[i].filteredOut) {
+        continue;
       }
-      tableRows[i].filteredOut = !isFiltered;
-      console.log("Row: "+i, "Filtered: "+ isFiltered,"Filtered Out: "+ tableRows[i].filteredOut, "Data: "+JSON.stringify(tableRows[i].data));
-      if (!tableRows[i].filteredOut) {
+      let isFiltered = false;
+      for (let j = 0; j < filterData.length; ++j) {
+        let filtered = true;
+        if(filterData[j] && filterData[j].values.length) {
+          for (let k = 0; k < filterData[j].values.length; ++k) {
+            if (!filterData[j].values[k].isCommon) {
+              continue;
+            }
+
+            if (filterData[j] === undefined) {
+              //TODO: Change the INCLUDES function to the new UTILS service.
+              isFiltered = !isFiltered && tableRows[i].data[j].toString().includes('');
+              continue;
+            }
+            let filterOption = filterData[j].values[k];
+            let comparatorResult = filterOption.comparator.call(this, tableRows[i].data[j].toString(), filterData[j].values[k].value);
+            filtered = filterOption.operator.call(this, filtered, comparatorResult)
+          }
+          isFiltered = isFiltered || filtered;
+        }
+      }
+      tableRows[i].filteredOutCommon = !isFiltered;
+      if (!tableRows[i].filteredOutCommon) {
         FilterRowCount++;
       }
     }
@@ -55,18 +80,29 @@ export class FilterService {
     return result;
   }
 
-  filter(data:Array<FilterOptions>, tableRows):FilteredData {
+  filter(filterData:Array<FilterOptions>, tableRows):FilteredData {
     let FilterRowCount = 0;
     let result:FilteredData = {tableRows: [], FilteredRowCount: 0};
     for (let i = 0; i < tableRows.length; ++i) {
       let isFiltered = true;
-      for (let j = 0; j < data.length; ++j) {
-        if (data[j] === undefined) {
-          //TODO: Change the INCLUDES function to the new UTILS service.
-          isFiltered = isFiltered && tableRows[i].data[j].toString().includes('');
-          continue;
+      for (let j = 0; j < filterData.length; ++j) {
+        let filtered;
+        if (!filterData[j] || !filterData[j].values.length) {
+          filtered = true;
         }
-        isFiltered = isFiltered && this.getFilteredValue(j, data, tableRows[i].data[j].toString());
+        else {
+          for (let k = 0; k < filterData[j].values.length; ++k) {
+            if (filterData[j] === undefined) {
+              //TODO: Change the INCLUDES function to the new UTILS service.
+              isFiltered = !isFiltered && tableRows[i].data[j].toString().includes('');
+              continue;
+            }
+            let filterOption = filterData[j].values[k];
+            let comparatorResult = filterOption.comparator.call(this, tableRows[i].data[j].toString(), filterData[j].values[k].value);
+            filtered = filterOption.operator.call(this, filtered, comparatorResult)
+          }
+          isFiltered = isFiltered && filtered;
+        }
       }
       tableRows[i].filteredOut = !isFiltered;
       if (!tableRows[i].filteredOut) {

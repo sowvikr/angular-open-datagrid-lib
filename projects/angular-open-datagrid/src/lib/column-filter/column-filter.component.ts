@@ -1,11 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {FilterService} from '../filter.service';
 import {StringUtilsService} from '../string-utils.service';
-interface FilterOptions {
-  operator: string;
-  values: Array<any>;
-  comparator: any;
+interface FilterOption {
+  value:string;
+  operator:any;
+  comparator:any;
 }
+
+interface FilterOptions {
+  values:Array<FilterOption>
+}
+
 
 @Component({
   selector: 'app-column-filter',
@@ -68,7 +73,15 @@ export class ColumnFilterComponent implements OnInit {
   }
 
   search(text) {
-    let filterOptions:Array<FilterOptions> = [{comparator: StringUtilsService.includes, operator: "or", values: [text]}];
+    let filterOptions:Array<FilterOptions> = [];
+    if (!filterOptions[0]) {
+      filterOptions[0] = {values: []};
+    }
+    filterOptions[0].values = [{
+      comparator: StringUtilsService.includes,
+      operator: FilterService.OR,
+      value: text
+    }];
     this.FilterValues = this.filterService.filter(filterOptions, this.FilterValues).tableRows;
   }
 
