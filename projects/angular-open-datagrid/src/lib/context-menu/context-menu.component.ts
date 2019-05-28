@@ -82,12 +82,12 @@ export class ContextMenuComponent implements OnInit {
       this.onDelete.delete(this.contextData);
     }
     }
-    /*,
+    ,
      {
      text: 'Export', shortcut: ' ', icon: null, onClick() {
      let col = [];
      for (let i = 0; i < this.columnData.length; ++i) {
-     col.push(this.columnData[i].field);
+     col.push(this.columnData[i].headerName);
      }
      const options = {
      fieldSeparator: ',',
@@ -95,7 +95,7 @@ export class ContextMenuComponent implements OnInit {
      decimalSeparator: '.',
      showLabels: true,
      showTitle: true,
-     title: 'Data',
+     title: 'Data exported as CSV',
      useTextFile: false,
      useBom: true,
      headers: col
@@ -103,7 +103,7 @@ export class ContextMenuComponent implements OnInit {
      const csvExporter = new ExportToCsv(options);
 
      csvExporter.generateCsv(this.rowData);    }
-     }*/
+     }
   ];
   @ViewChild('contextMenu') contextMenu:ElementRef;
 
