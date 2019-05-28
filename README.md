@@ -104,6 +104,7 @@ rowData: [
 4. Nice animation for visualization.
 5. Edit Cell
 6. Copy paste like Microsoft Excel.
+7. Export the data as CSV.
 # Preview
 ![Preview](/Datatable.png)
 # Future Timeline
