@@ -72,6 +72,7 @@
       </th>
     </tr>
     </thead>
+    <!--(cdkDropListDropped)="dropRow($event)"-->
     <tbody (click)="onContextMenuOff()" tabindex="0" ctrlKeys
            (ctrlC)="onCtrlC()"
            (ctrlV)="onCtrlV()" cdkDropList (cdkDropListDropped)="dropRow($event)">
@@ -132,7 +133,7 @@
             (mousedown)="onDragStart(rowCount, columnCount,$event)"
             (mouseover)="onSelecting(rowCount, columnCount, cell, $event)"
             (mouseup)="onDragEnd(rowCount, columnCount, $event)"
-            [ngStyle]="{'width':columnDefs[columnCount].width, transform:isMoving? Moved[columnCount]:'inherit'}"
+            [ngStyle]="{'width':columnDefs[columnCount].width, transform:isMoving? Moved[columnCount]:'none'}"
             [ngClass]="{'column-moving':(isMoving&&(Moved[columnCount]!==undefined))}"
             oncontextmenu="return false;">
           <app-inline-edit

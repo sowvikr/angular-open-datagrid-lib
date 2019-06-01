@@ -441,6 +441,11 @@ export class DataTableComponent implements OnInit {
     this.selectAllRows = false;
 
   }
+  dragMoved($event){
+    setTimeout(function(){
+      debugger;
+    },2000);
+  }
 
   valueChanged(changeValue:any) {
     this.TableRows[changeValue.row].data[changeValue.column] = changeValue.value;
