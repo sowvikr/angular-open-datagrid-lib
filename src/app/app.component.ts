@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'angular-open-datagrid-lib';
   pagination = true;
-  theme = 'dark-theme';
+  theme = 'light-theme';
   columnDefs = [
     {
       headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, columnFilter: true,
@@ -444,7 +444,7 @@ export class AppComponent {
   commonSearch = true;
   rowData = [];
   ngOnInit() {
-  for(let i=0;i<1500;++i){
+  for(let i=0;i<1;++i){
 	  this.rowData = this.rowData.concat(this.rowData1);
   }
   }
