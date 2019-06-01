@@ -1,5 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<data-grid [commonSearch]="commonSearch" [pagination]="pagination" [theme]="theme"
-                [columnDefs]="columnDefs" [rowData]="rowData"></data-grid>
+<div class="page-container">
+  <div class="theme-links">
+    <button mat-raised-button color="primary" [routerLink]="''">Standard</button>
+    <button mat-raised-button color="primary" [routerLink]="'dark'">Dark</button>
+    <button mat-raised-button color="primary" [routerLink]="'blue'">New Bootstrap</button>
+    <button mat-raised-button color="primary" [routerLink]="'material'">Material</button>
+    <button mat-raised-button color="primary" [routerLink]="'all'">All Themes</button>
+  </div>
+  <router-outlet></router-outlet>
 
-<router-outlet></router-outlet>
+</div>
