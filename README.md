@@ -107,6 +107,10 @@ rowData: [
 7. Export the data as CSV.
 # Preview
 ![Preview](/Datatable.png)
+# Demo
+1. Download the zip.
+2. Unzip and open CMD and type npm start.
+
 # Future Timeline
 1. Ability to render remote data.
 2. Make more fast and smooth.
