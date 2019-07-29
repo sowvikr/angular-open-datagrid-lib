@@ -6,419 +6,344 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./standard-theme.component.scss']
 })
 export class StandardThemeComponent implements OnInit {
+
+  rowData5 = [
+    {
+      'price': '1,00,000',
+      'symbol': 'AXJIO',
+      'shares': 10
+    },
+    {
+      'price': '20,000',
+      'symbol': 'NAB.AX',
+      'shares': 5
+    },
+    {
+      'price': '10,000',
+      'symbol': 'IBM',
+      'shares': 10
+    },
+    {
+      'price': '2,000',
+      'symbol': 'JBX.AX',
+      'shares': 15
+    },
+    {
+      'price': '80,000',
+      'symbol': 'WES.AX',
+      'shares': 7
+    },
+    {
+      'price': '1,000',
+      'symbol': 'AAPL',
+      'shares': 8
+    },
+    {
+      'price': '8,000',
+      'symbol': 'HPQ',
+      'shares': 11
+    },
+    {
+      'price': '60,000',
+      'symbol': 'INTC',
+      'shares': 26
+    },
+    {
+      'price': '800',
+      'symbol': 'RACE',
+      'shares': 90
+    },
+    {
+      'price': '9000',
+      'symbol': 'TM',
+      'shares': 100
+    }
+
+  ]
+
+  rowData1 = [
+    {
+      'price': '35,000',
+      'symbol': 'NAB.AX',
+      'shares': 5
+    },
+    {
+      'price': '16,000',
+      'symbol': 'IBM',
+      'shares': 10
+    },
+    {
+      'price': '83,000',
+      'symbol': 'WES.AX',
+      'shares': 7
+    },
+    {
+      'price': '1,500',
+      'symbol': 'JBX.AX',
+      'shares': 15
+    },
+    {
+      'price': '850',
+      'symbol': 'RACE',
+      'shares': 90
+    },
+    {
+      'price': '6,000',
+      'symbol': 'HPQ',
+      'shares': 11
+    },
+    {
+      'price': '1,20,000',
+      'symbol': 'AXJIO',
+      'shares': 10
+    },
+    {
+      'price': '8500',
+      'symbol': 'TM',
+      'shares': 100
+    },
+    {
+      'price': '14,000',
+      'symbol': 'AAPL',
+      'shares': 8
+    },
+    {
+      'price': '57,500',
+      'symbol': 'INTC',
+      'shares': 26
+    }
+  ];
+
+  rowData2 = [
+    {
+      'price': '85,000',
+      'symbol': 'WES.AX',
+      'shares': 7
+    },
+    {
+      'price': '6,000',
+      'symbol': 'HPQ',
+      'shares': 11
+    },
+    {
+      'price': '55,000',
+      'symbol': 'INTC',
+      'shares': 26
+    },
+    {
+      'price': '1,00,000',
+      'symbol': 'AXJIO',
+      'shares': 10
+    },
+    {
+      'price': '30,000',
+      'symbol': 'NAB.AX',
+      'shares': 5
+    },
+    {
+      'price': '12,000',
+      'symbol': 'IBM',
+      'shares': 10
+    },
+    {
+      'price': '1,500',
+      'symbol': 'JBX.AX',
+      'shares': 15
+    },
+    {
+      'price': '800',
+      'symbol': 'RACE',
+      'shares': 90
+    },
+    {
+      'price': '8000',
+      'symbol': 'TM',
+      'shares': 100
+    },
+    {
+      'price': '12,000',
+      'symbol': 'AAPL',
+      'shares': 8
+    }
+  ];
+
+  rowData3 = [
+    {
+      'price': '58,500',
+      'symbol': 'INTC',
+      'shares': 26
+    },
+    {
+      'price': '35,500',
+      'symbol': 'NAB.AX',
+      'shares': 5
+    },
+    {
+      'price': '12,000',
+      'symbol': 'IBM',
+      'shares': 10
+    },
+    {
+      'price': '83,000',
+      'symbol': 'WES.AX',
+      'shares': 7
+    },
+    {
+      'price': '890',
+      'symbol': 'RACE',
+      'shares': 90
+    },
+    {
+      'price': '6,000',
+      'symbol': 'HPQ',
+      'shares': 11
+    },
+    {
+      'price': '14,500',
+      'symbol': 'AAPL',
+      'shares': 8
+    },
+    {
+      'price': '1,550',
+      'symbol': 'JBX.AX',
+      'shares': 15
+    },
+
+    {
+      'price': '1,50,000',
+      'symbol': 'AXJIO',
+      'shares': 10
+    },
+    {
+      'price': '8900',
+      'symbol': 'TM',
+      'shares': 100
+    }
+
+  ];
+
+  rowData4 = [
+    {
+      'price': '15,000',
+      'symbol': 'IBM',
+      'shares': 10
+    },
+    {
+      'price': '800',
+      'symbol': 'RACE',
+      'shares': 90
+    },
+    {
+      'price': '2,000',
+      'symbol': 'JBX.AX',
+      'shares': 15
+    },
+    {
+      'price': '80,000',
+      'symbol': 'WES.AX',
+      'shares': 7
+    },
+    {
+      'price': '9000',
+      'symbol': 'TM',
+      'shares': 100
+    },
+    {
+      'price': '1,00,000',
+      'symbol': 'AXJIO',
+      'shares': 10
+    },
+    {
+      'price': '20,000',
+      'symbol': 'NAB.AX',
+      'shares': 5
+    },
+    {
+      'price': '1,000',
+      'symbol': 'AAPL',
+      'shares': 8
+    },
+    {
+      'price': '8,000',
+      'symbol': 'HPQ',
+      'shares': 11
+    },
+    {
+      'price': '60,000',
+      'symbol': 'INTC',
+      'shares': 26
+    }
+
+  ];
+
   dataTables: Array<any> = [
     {
       pagination: true, theme: 'light-theme',
       columnDefs: [
         {
-          headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, columnFilter: true,
-          sort: true, isEdit: true, suppressMovable: true
-        }, {
-          headerName: 'Trade Reference', width: 220, field: 'tradeRef', filter: true, columnFilter: true,
+          headerName: 'Price', width: 220, field: 'price', filter: true, columnFilter: true,
           sort: true, isEdit: true, suppressMovable: true
         },
         {
-          headerName: 'Client', width: 220, field: 'client', filter: true, sort: true, columnFilter: true,
-          isEdit: true, suppressMovable: true,
-          cellRender: (row, column, data, def) => {
-            return '<a href="#/client"><span class="client-link">'
-              + data + '</span></a>';
-          }
-        },
-        {
-          headerName: 'Bought', width: 220, field: 'symbol', filter: true, sort: true, isEdit: true, suppressMovable: true, columnFilter: true,
-          cellRender: (row, column, data, def) => {
-            let icon = 'check';
-            if (!data) {
-              icon = 'x';
-            }
-            return '<i class="feather icon-' + icon +
-              '"></i>';
-          }
-        },
-        {
-          headerName: 'BuySell', width: 220, field: 'buySell', filter: true, resizable: true,
+          headerName: 'Symbol', width: 220, field: 'symbol', filter: true, columnFilter: true,
           sort: true, isEdit: true, suppressMovable: true
         },
         {
-          headerName: 'Shares', width: 220, field: 'shares', filter: true, resizable: true, sort: true, isEdit: true, suppressMovable: true
-        },
-        {
-          headerName: 'Price', width: 220, field: 'price', filter: true, resizable: true, sort: true, isEdit: true, suppressMovable: true
-        },
-        {
-          headerName: 'Notional', width: 220, field: 'notional', filter: true, resizable: true,
+          headerName: 'Shares', width: 220, field: 'shares', filter: true, resizable: true,
           sort: true, isEdit: true, suppressMovable: true
         },
-        {
-          headerName: 'Commission', width: 220, field: 'commission', filter: true, resizable: true,
-          sort: true, isEdit: true, suppressMovable: true
-        }
       ],
       rowData: [
         {
-          tradeDate: '01/01/2019',
-          tradeRef: 'ADP34232',
-          client: 'EY',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '1,00,000',
+          'symbol': 'AXJIO',
+          'shares': 10
         },
         {
-          tradeDate: '01/01/2019',
-          tradeRef: 'ADP34232',
-          client: 'EY',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '20,000',
+          'symbol': 'NAB.AX',
+          'shares': 5
         },
         {
-          tradeDate: '01/01/2019',
-          tradeRef: 'ADP34232',
-          client: 'EY',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '10,000',
+          'symbol': 'IBM',
+          'shares': 10
         },
         {
-          tradeDate: '01/01/2019',
-          tradeRef: 'ADP34232',
-          client: 'Goldman Sachs',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '2,000',
+          'symbol': 'JBX.AX',
+          'shares': 15
         },
         {
-          tradeDate: '01/02/2019',
-          tradeRef: 'CDP34232',
-          client: 'Goldman Sachs',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '80,000',
+          'symbol': 'WES.AX',
+          'shares': 7
         },
         {
-          tradeDate: '01/02/2019',
-          tradeRef: 'CDP34732',
-          client: 'Goldman Sachs',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '1,000',
+          'symbol': 'AAPL',
+          'shares': 8
         },
         {
-          tradeDate: '01/02/2019',
-          tradeRef: 'CDP33732',
-          client: 'Goldman Sachs',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '8,000',
+          'symbol': 'HPQ',
+          'shares': 11
         },
         {
-          tradeDate: '01/02/2019',
-          tradeRef: 'CDP33732',
-          client: 'Goldman Sachs',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '60,000',
+          'symbol': 'INTC',
+          'shares': 26
         },
         {
-          tradeDate: '01/02/2019',
-          tradeRef: 'CDP33732',
-          client: 'PWC',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
+          'price': '800',
+          'symbol': 'RACE',
+          'shares': 90
         },
         {
-          tradeDate: '01/02/2019',
-          tradeRef: 'DDP33732',
-          client: 'PWC',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/03/2019',
-          tradeRef: 'DDP44732',
-          client: 'PWC',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/03/2019',
-          tradeRef: 'DDP44732',
-          client: 'PWC',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/03/2019',
-          tradeRef: 'DDP44232',
-          client: 'PWC',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/03/2019',
-          tradeRef: 'DDP44232',
-          client: 'PWC',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/03/2019',
-          tradeRef: 'DDP44232',
-          client: 'PWC',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/03/2019',
-          tradeRef: 'EDP44232',
-          client: 'BSE',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/04/2019',
-          tradeRef: 'EDP44232',
-          client: 'BSE',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/04/2019',
-          tradeRef: 'EDP44232',
-          client: 'BSE',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/04/2019',
-          tradeRef: 'EDP44232',
-          client: 'BSE',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/04/2019',
-          tradeRef: 'EDP55232',
-          client: 'BSE',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/04/2019',
-          tradeRef: 'EDP55232',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/04/2019',
-          tradeRef: 'RDP55232',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/05/2019',
-          tradeRef: 'RDP52132',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/05/2019',
-          tradeRef: 'RDP52132',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/05/2019',
-          tradeRef: 'RDP32132',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/05/2019',
-          tradeRef: 'RDP32132',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/05/2019',
-          tradeRef: 'RDP32132',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/06/2019',
-          tradeRef: 'WDP32144',
-          client: 'NSE',
-          symbol: true,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/06/2019',
-          tradeRef: 'WDP32144',
-          client: 'CMC',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/06/2019',
-          tradeRef: 'WDP33244',
-          client: 'CMC',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/06/2019',
-          tradeRef: 'WDP33244',
-          client: 'CMC',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/06/2019',
-          tradeRef: 'WDP33244',
-          client: 'CMC',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
-        {
-          tradeDate: '01/06/2019',
-          tradeRef: 'WDP33244',
-          client: 'CMC',
-          symbol: false,
-          buySell: 'B',
-          shares: '50,000',
-          price: '$2.00',
-          notional: '$200,000',
-          commission: ' $2,500'
-        },
+          'price': '9000',
+          'symbol': 'TM',
+          'shares': 100
+        }
       ]
     }
   ];
@@ -427,6 +352,14 @@ export class StandardThemeComponent implements OnInit {
   }
 
   ngOnInit() {
+    setInterval(() => {
+      const rowData = this['rowData' + Math.floor((Math.random() * 5) + 1)];
+      if (rowData) {
+        console.log(rowData);
+      }
+      this.dataTables[0].rowData = rowData;
+    }, 5000);
   }
 
 }
+

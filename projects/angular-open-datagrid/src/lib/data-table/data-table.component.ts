@@ -83,7 +83,14 @@ export class DataTableComponent implements OnInit {
 
   @Input() theme;
   @Input() columnDefs:Column[];
-  @Input() rowData;
+  private _rowData;
+  get rowData():Array<any>{
+    return this._rowData;
+  }
+  @Input() set rowData(data:Array<any>){
+    this._rowData = data;
+    this.init();
+  }
   @Input() rowSelection:boolean = true;
   @Input()commonSearch:boolean = false;
   public isMoving:boolean = false;
@@ -117,14 +124,14 @@ export class DataTableComponent implements OnInit {
   createTableData1(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
     this.contextMenuData = [];
-    if (!(this.rowData && this.rowData.length)) {
-      this.rowData = [];
+    if (!(this._rowData && this._rowData.length)) {
+      this._rowData = [];
     }
-    else if (this.columnDefs.length !== Object.keys(this.rowData[0]).length) {
+    else if (this.columnDefs.length !== Object.keys(this._rowData[0]).length) {
       console.warn('Invalid data: Total Column in def: ' + this.columnDefs.length + 'Total Columns in data:'
-        + Object.keys(this.rowData[0]).length);
+        + Object.keys(this._rowData[0]).length);
     }
-    for (let j = 0; j < this.rowData.length; ++j) {
+    for (let j = 0; j < this._rowData.length; ++j) {
       const row:TableRow = {data: [], filteredOut: false, filteredOutCommon: false};
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (!(filteredData && filteredData.length !== 0 && currentPage > 0)) {
@@ -132,7 +139,7 @@ export class DataTableComponent implements OnInit {
           this.columnDefs[i].showFilter = false;
         }
         row.cellRender = this.cellRenderer;
-        row.data.push(this.rowData[j][this.columnDefs[i].field]);
+        row.data.push(this._rowData[j][this.columnDefs[i].field]);
         if (this.rowSelection) {
           row.rowSelect = false;
         }
@@ -343,8 +350,8 @@ export class DataTableComponent implements OnInit {
     this.CurrentPage++;
     this.FromRecord += this.pageSize;
     this.ToRecord += this.pageSize;
-    if (this.ToRecord > this.rowData.length) {
-      this.ToRecord = this.rowData.length;
+    if (this.ToRecord > this._rowData.length) {
+      this.ToRecord = this._rowData.length;
     }
     this.setPagedRow(this.CurrentPage);
   }
@@ -693,12 +700,12 @@ export class DataTableComponent implements OnInit {
     for (let i = 0; i < data.length; ++i) {
       if (data[i] && data[i].length) {
         if (this.TableRows[i].rowSelect)
-          this.rowData[i] = undefined;
+          this._rowData[i] = undefined;
       }
     }
-    for (let j = 0; j < this.rowData.length; ++j) {
-      if (!this.rowData[j]) {
-        this.rowData.splice(j, 1);
+    for (let j = 0; j < this._rowData.length; ++j) {
+      if (!this._rowData[j]) {
+        this._rowData.splice(j, 1);
         j--;
       }
     }
@@ -782,16 +789,16 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSizeChange($event, value) {
-    this.pageSize = (parseInt(value) > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
+    this.pageSize = (parseInt(value) > this._rowData.length) ? this._rowData.length : this.rowSizes[0];
     this.tableDraw();
   }
 
   private tableDraw() {
-    this.FilterRowCount = this.rowData.length;
-    this.TotalRows = this.rowData.length;
+    this.FilterRowCount = this._rowData.length;
+    this.TotalRows = this._rowData.length;
     this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
     this.createTableData1();
-    this.TotalPages = Math.ceil(this.rowData.length / this.pageSize);
+    this.TotalPages = Math.ceil(this._rowData.length / this.pageSize);
     this.ToRecord = this.pageSize;
 
   }
@@ -799,14 +806,16 @@ export class DataTableComponent implements OnInit {
   constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService, private ref:ChangeDetectorRef) {
   }
 
-  ngOnInit() {
+  private init(){
     if (!this.theme) {
       this.theme = "standard";
     }
-
     this.dragTheme = this.theme + '-drag';
-    this.pageSize = (this.rowSizes[0] > this.rowData.length) ? this.rowData.length : this.rowSizes[0];
+    this.pageSize = (this.rowSizes[0] > this._rowData.length) ? this._rowData.length : this.rowSizes[0];
     this.tableDraw();
+  }
+  ngOnInit() {
+    this.init();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data));
     this.dataTableService.getOnDeleteEvent().subscribe(data => this.deleteData(data));
   }
