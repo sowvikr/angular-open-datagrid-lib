@@ -1,5 +1,6 @@
 # AngularOpenDatagrid
-
+### Demo
+![Preview](/AngularOpenDatagridLib.gif)
 ### Install
 ```npm install angular-open-datagrid --save```
 ### Usage
