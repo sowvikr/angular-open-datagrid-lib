@@ -1,6 +1,6 @@
 # AngularOpenDatagrid
 ### Demo
-![Preview](/AngularOpenDatagridLib.gif)
+![Preview](https://raw.githubusercontent.com/sowvikr/angular-open-datagrid-lib/master/AngularOpenDatagridLib.gif)
 ### Install
 ```npm install angular-open-datagrid --save```
 ### Usage
@@ -106,8 +106,7 @@ rowData: [
 5. Edit Cell
 6. Copy paste like Microsoft Excel.
 7. Export the data as CSV.
-# Preview
-![Preview](/Datatable.png)
+
 # Demo
 1. Download the zip.
 2. Unzip and open CMD and type npm start.

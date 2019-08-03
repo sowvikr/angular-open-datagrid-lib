@@ -1,5 +1,6 @@
 # AngularOpenDatagrid
-
+### Demo
+![Preview](https://raw.githubusercontent.com/sowvikr/angular-open-datagrid-lib/master/AngularOpenDatagridLib.gif)
 ### Install
 ```npm install angular-open-datagrid --save```
 ### Usage
@@ -34,14 +35,15 @@ and include css in src/styles.scss
 ## Table Options
 ### Pagination
 * **pagination [boolean]:** Enable pagination for the table.
-* **pageSize [boolean]:** Enable pagination for the table.
+* **pageSize [number]:** Enable pagination for the table.
 ### Themes
 * **theme [string]:** Themebased table. The available themes are as follows
 1. Matrial Theme (metrial-theme)
 2. Dark Theme (dark-theme)
 3. Standard Theme (standard-theme)
 4. Red Theme (red-theme)
-
+### Search
+* **commonSearch [boolean]:** Enable common search for the table.
 ### Column Definitions
 #### Mandatory Options
 * **headerName [string]:** Header name of the particular column
@@ -103,8 +105,12 @@ rowData: [
 4. Nice animation for visualization.
 5. Edit Cell
 6. Copy paste like Microsoft Excel.
-# Preview
-![Preview](/Datatable.png)
+7. Export the data as CSV.
+
+# Demo
+1. Download the zip.
+2. Unzip and open CMD and type npm start.
+
 # Future Timeline
 1. Ability to render remote data.
 2. Make more fast and smooth.

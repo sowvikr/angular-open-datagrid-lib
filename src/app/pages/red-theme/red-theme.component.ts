@@ -30,9 +30,9 @@ export class RedThemeComponent implements OnInit {
           cellRender: (row, column, data, def) => {
             let icon = 'check';
             if (!data) {
-              icon = 'x';
+              icon = 'times';
             }
-            return '<i class="feather icon-' + icon +
+            return '<i class="fa icon-' + icon +
               '"></i>';
           }
         },
