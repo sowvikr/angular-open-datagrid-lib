@@ -14,6 +14,7 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { InlineEditComponent } from './inline-edit/inline-edit.component';
 import { ColumnFilterComponent } from './column-filter/column-filter.component';
 import { ResizableDirective, GrabberDirective } from './resizeable';
+import { HotKeysDirective } from './hot-keys.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ResizableDirective, GrabberDirective } from './resizeable';
     InlineEditComponent,
     ColumnFilterComponent,
     ResizableDirective,
-    GrabberDirective
+    GrabberDirective,
+    HotKeysDirective
   ],
   imports: [
     BrowserModule,
