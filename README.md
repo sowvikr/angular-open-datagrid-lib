@@ -39,6 +39,7 @@ and include css in src/styles.scss
 ### Events
 > **dataChanged [function]** 
 >> Get data change event with parameters.
+>>
 >> **_HTML_**
 >> ```html
 >>   <data-grid [pagination]="pagination" [theme]="theme"
