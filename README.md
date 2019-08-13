@@ -39,14 +39,16 @@ and include css in src/styles.scss
 ### Events
 > **dataChanged [function]** 
 >> Get data change event with parameters.
+>> ** HTML**
 >> ```html
 >>   <data-grid [pagination]="pagination" [theme]="theme"
 >>                   [columnDefs]="columnDefs" [rowData]="rowData" (dataChanged)="valueChanged($event)" ></data-grid>
 >>   ```
+>> ** JavaScript**
 >> ```javascript
 >>   valueChanged (valueChanged){
-         console.log("Row: ",valueChanged.row,"Column: ",valueChanged.column, "Data: ",,valueChanged.data );
-       }
+>>         console.log("Row: ",valueChanged.row,"Column: ",valueChanged.column, "Data: ",,valueChanged.data );>>
+>>       }
 >>   ```
 ### Themes
 * **theme [string]:** Themebased table. The available themes are as follows
