@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dark-theme.component.scss']
 })
 export class DarkThemeComponent implements OnInit {
+
+  valueChanged (valueChanged){
+    console.log("Change Triggered",valueChanged);
+  }
+
   dataTables: Array<any> = [
     {
       pagination: true, theme: 'dark-theme',

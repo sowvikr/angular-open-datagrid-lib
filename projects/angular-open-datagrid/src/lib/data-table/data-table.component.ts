@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {trigger, style, animate, transition} from '@angular/animations';
 import {moveItemInArray} from '@angular/cdk/drag-drop';
 import {filter} from 'rxjs/internal/operators/filter';
@@ -55,6 +55,13 @@ interface ContextMenuData {
   data: any;
 }
 
+interface  DataChangeEventData{
+  row: number,
+  column: number,
+  data: any
+}
+
+
 @Component({
   selector: 'data-grid',
   templateUrl: './data-table.component.html',
@@ -77,6 +84,8 @@ interface ContextMenuData {
 })
 export class DataTableComponent implements OnInit {
 
+
+  @Output() dataChanged = new EventEmitter<DataChangeEventData>();
   @Input() pagination;
   private pageSize;
   public dragTheme;
@@ -121,7 +130,7 @@ export class DataTableComponent implements OnInit {
   public selectAllRows:boolean = false;
 
   // Convert row data to a 2D array.
-  createTableData1(filteredData?:Array<any>, currentPage?:number) {
+  createTableData(filteredData?:Array<any>, currentPage?:number) {
     this.TableRows = new Array<any>();
     this.contextMenuData = [];
     if (!(this._rowData && this._rowData.length)) {
@@ -437,7 +446,7 @@ export class DataTableComponent implements OnInit {
     this.previousIndex = undefined;
     moveItemInArray(this.columnDefs, event.previousIndex, event.currentIndex);
     moveItemInArray(this.FilterData, event.previousIndex, event.currentIndex);
-    this.createTableData1(this.FilterData, this.CurrentPage);
+    this.createTableData(this.FilterData, this.CurrentPage);
 
   }
 
@@ -458,7 +467,7 @@ export class DataTableComponent implements OnInit {
     this.TableRows[changeValue.row].data[changeValue.column] = changeValue.value;
     this.pagedRows();
     this.setPagedRow(this.CurrentPage);
-
+    this.dataChanged.emit(changeValue);
   }
 
   private selectedRowsCount():number {
@@ -797,7 +806,7 @@ export class DataTableComponent implements OnInit {
     this.FilterRowCount = this._rowData.length;
     this.TotalRows = this._rowData.length;
     this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
-    this.createTableData1();
+    this.createTableData();
     this.TotalPages = Math.ceil(this._rowData.length / this.pageSize);
     this.ToRecord = this.pageSize;
 

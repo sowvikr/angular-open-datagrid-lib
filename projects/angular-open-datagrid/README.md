@@ -36,6 +36,18 @@ and include css in src/styles.scss
 ### Pagination
 * **pagination [boolean]:** Enable pagination for the table.
 * **pageSize [number]:** Enable pagination for the table.
+### Events
+> **dataChanged [function]** 
+>> Get data change event with parameters.
+>> ```html
+>>   <data-grid [pagination]="pagination" [theme]="theme"
+>>                   [columnDefs]="columnDefs" [rowData]="rowData" (dataChanged)="valueChanged($event)" ></data-grid>
+>>   ```
+>> ```javascript
+>>   valueChanged (valueChanged){
+         console.log("Row: ",valueChanged.row,"Column: ",valueChanged.column, "Data: ",,valueChanged.data );
+       }
+>>   ```
 ### Themes
 * **theme [string]:** Themebased table. The available themes are as follows
 1. Matrial Theme (metrial-theme)

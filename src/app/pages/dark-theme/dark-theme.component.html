@@ -1,5 +1,5 @@
 
 <div *ngFor="let dataTable of dataTables">
   <data-grid [commonSearch]="commonSearch" [pagination]="dataTable.pagination" [theme]="dataTable.theme"
-                  [columnDefs]="dataTable.columnDefs" [rowData]="dataTable.rowData"></data-grid>
+                  [columnDefs]="dataTable.columnDefs" [rowData]="dataTable.rowData" (dataChanged)="valueChanged($event)"></data-grid>
 </div>
