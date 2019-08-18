@@ -33,6 +33,8 @@ and include css in src/styles.scss
 ```
 
 ## Table Options
+### New Options Introduced
+![Preview](https://raw.githubusercontent.com/sowvikr/angular-open-datagrid-lib/master/NewOptions.png)
 ### Pagination
 * **pagination [boolean]:** Enable pagination for the table.
 * **pageSize [number]:** Enable pagination for the table.
@@ -109,8 +111,8 @@ rowData: [
 ```
 ### Binding data with table component
 ```html
-  <app-data-table [pagination]=true [theme]="standard-theme"
-                  [columnDefs]="columns" [rowData]="data"></app-data-table>
+  <data-grid [pagination]=true [theme]="standard-theme"
+                  [columnDefs]="columns" [rowData]="data"></data-grid>
 ```
 
 ## Notable Features

@@ -9,6 +9,7 @@ export class RedThemeComponent implements OnInit {
   dataTables: Array<any> = [
     {
       pagination: true, theme: 'red-theme',
+      commonSearch:true,
       columnDefs: [
         {
           headerName: 'Trade Date', width: 220, field: 'tradeDate', filter: true, columnFilter: true,

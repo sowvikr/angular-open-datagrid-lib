@@ -6,7 +6,40 @@
   </select>
 </div>
 -->
-<div class="table-container">
+
+
+<div class="table-container" (click)="onOutsideClick($event)">
+  <div style="position: absolute; float: left;z-index: 10" [ngClass]="theme">
+    <button class="options-menu button button-options" type="button" (click)="optionsMenu=!optionsMenu">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="context-menu-optn" [ngClass]="theme" *ngIf="optionsMenu">
+      <div class="context-menu-optn-list">
+        <div class="context-menu-optn-option">
+          <div class="container context-menu-optn-option-icon">
+            <label>
+              <input id="commonFilterCheckbox" type="checkbox" [(ngModel)]="commonSearch"/>
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="context-menu-optn-option-text">
+            <label class="checkLabel" for="commonFilterCheckbox">Common Search</label>
+          </div>
+        </div>
+        <div class="context-menu-optn-option">
+          <div class="container context-menu-optn-option-icon">
+            <label>
+              <input id="commonCacheCheckbox" [(ngModel)]="cacheFilter" type="checkbox"/>
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="context-menu-optn-option-text">
+            <label class="checkLabel" for="commonCacheCheckbox">Cache Search</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="commonSearch" class="common-search" [ngClass]="theme">
     <label>
       Search:

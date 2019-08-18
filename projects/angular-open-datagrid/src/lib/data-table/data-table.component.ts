@@ -24,6 +24,7 @@ interface FilterOption {
 
 interface FilterOptions {
   values:Array<FilterOption>
+  filterApplied?: boolean;
 }
 interface Column extends CellRenderer {
   headerName: string;
@@ -55,7 +56,7 @@ interface ContextMenuData {
   data: any;
 }
 
-interface  DataChangeEventData{
+interface  DataChangeEventData {
   row: number,
   column: number,
   data: any
@@ -93,15 +94,19 @@ export class DataTableComponent implements OnInit {
   @Input() theme;
   @Input() columnDefs:Column[];
   private _rowData;
-  get rowData():Array<any>{
+  get rowData():Array<any> {
     return this._rowData;
   }
-  @Input() set rowData(data:Array<any>){
+
+  @Input() set rowData(data:Array<any>) {
     this._rowData = data;
     this.init();
   }
+
   @Input() rowSelection:boolean = true;
-  @Input()commonSearch:boolean = false;
+  public commonSearch:boolean = true;
+  public cacheFilter:boolean = false;
+  public optionsMenu:boolean = false;
   public isMoving:boolean = false;
   private clientWidth;
   public Moved:Array<any> = [];
@@ -206,6 +211,16 @@ export class DataTableComponent implements OnInit {
     }
   }
 
+  public onOutsideClick(event){
+    if(event.target.className === "options-menu button button-options" ||
+      event.target.className === "fa fa-bars" ||
+      event.target.className === "checkmark" ||
+      event.srcElement.id === "commonCacheCheckbox" ||
+      event.srcElement.id === "commonFilterCheckbox" ||
+      event.target.className === "checkLabel") return;
+    this.optionsMenu = false;
+  }
+
   public checkedRowSelection(event, isHeader) {
     if (isHeader) {
       this.selectRows(event.target.checked, null, true);
@@ -219,8 +234,16 @@ export class DataTableComponent implements OnInit {
   }
 
   private generateUniqueFilters() {
+
     for (let i = 0; i < this.columnDefs.length; ++i) {
-      this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+      if (this.FilterData && this.FilterData[i] && this.FilterData[i].values.length > 0) {
+        if (!this.FilterData[i].filterApplied || !this.cacheFilter) {
+          this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+        }
+      }
+      else {
+        this.createColumnFilter(this.columnDefs[i], this.TableRows, i);
+      }
     }
   }
 
@@ -337,8 +360,9 @@ export class DataTableComponent implements OnInit {
       this.FilterData[filterEventArgs.column].values.push({
         comparator: StringUtilsService.equals,
         operator: FilterService.OR,
-        value: filterEventArgs.filteredData[i]
+        value: filterEventArgs.filteredData[i],
       });
+      this.FilterData[filterEventArgs.column].filterApplied = this.cacheFilter;
     }
     this.applyFilter(this.FilterData, this.TableRows);
   }
@@ -457,10 +481,11 @@ export class DataTableComponent implements OnInit {
     this.selectAllRows = false;
 
   }
-  dragMoved($event){
-    setTimeout(function(){
+
+  dragMoved($event) {
+    setTimeout(function () {
       debugger;
-    },2000);
+    }, 2000);
   }
 
   valueChanged(changeValue:any) {
@@ -514,7 +539,7 @@ export class DataTableComponent implements OnInit {
 
     if (text === undefined || text === "") {
       for (let i = 0; i < this.columnDefs.length; ++i) {
-        if(!this.FilterData[i]){
+        if (!this.FilterData[i]) {
           continue;
         }
         let index = this.getCommonFiliterIndex(this.FilterData[i].values);
@@ -805,8 +830,8 @@ export class DataTableComponent implements OnInit {
   private tableDraw() {
     this.FilterRowCount = this._rowData.length;
     this.TotalRows = this._rowData.length;
-    this.FilterData = new Array<FilterOptions>(this.columnDefs.length);
-    this.createTableData();
+    this.FilterData = this.FilterData || new Array<FilterOptions>(this.columnDefs.length);
+    this.createTableData(this.FilterData, this.CurrentPage || 0);
     this.TotalPages = Math.ceil(this._rowData.length / this.pageSize);
     this.ToRecord = this.pageSize;
 
@@ -815,7 +840,7 @@ export class DataTableComponent implements OnInit {
   constructor(private clipboardService:ClipboardService, private filterService:FilterService, private dataTableService:DataTableUtilsService, private ref:ChangeDetectorRef) {
   }
 
-  private init(){
+  private init() {
     if (!this.theme) {
       this.theme = "standard";
     }
@@ -823,6 +848,7 @@ export class DataTableComponent implements OnInit {
     this.pageSize = (this.rowSizes[0] > this._rowData.length) ? this._rowData.length : this.rowSizes[0];
     this.tableDraw();
   }
+
   ngOnInit() {
     this.init();
     this.clipboardService.getPasteEvent().subscribe(data => this.pasteData(data));

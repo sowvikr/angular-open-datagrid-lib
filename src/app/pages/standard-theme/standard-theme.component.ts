@@ -279,6 +279,7 @@ export class StandardThemeComponent implements OnInit {
   dataTables: Array<any> = [
     {
       pagination: true, theme: 'light-theme',
+      cacheFilter:true,
       columnDefs: [
         {
           headerName: 'Price', width: 220, field: 'price', filter: true, columnFilter: true,
@@ -358,7 +359,7 @@ export class StandardThemeComponent implements OnInit {
         console.log(rowData);
       }
       this.dataTables[0].rowData = rowData;
-    }, 5000);
+    }, 30000);
   }
 
 }

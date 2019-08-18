@@ -1,6 +1,6 @@
 {
   "name": "angular-open-datagrid",
-  "version": "1.2.8",
+  "version": "1.3.0",
   "license": "(MIT)",
   "homepage": "https://github.com/sowvikr/angular-open-datagrid-lilb",
   "bugs": {
@@ -29,6 +29,7 @@
     "font-awesome": "^4.7.0",
     "ng4-click-outside": "^1.0.1"
   },
-  "keywords":["angular", "angular7", "angular-datagrid","angular-datatable", "datatable"]
+  "keywords":["angular", "angular7", "angular-datagrid","angular-datatable", "datatable", "angular data grid","angular-data-grid","angular grid","angular-grid","data grid","data grid for angular","angular table","material design grid","data table"]
 
 }
+
