@@ -35,32 +35,32 @@ and include css in src/styles.scss
 ## Table Options
 ### New Options Introduced
 ![Preview](https://raw.githubusercontent.com/sowvikr/angular-open-datagrid-lib/master/NewOptions.png)
+* **Common Search:** Enable common search for the table
+* **Cache Search:** Cache the search for the table
 ### Pagination
 * **pagination [boolean]:** Enable pagination for the table.
-* **pageSize [number]:** Enable pagination for the table.
+* **pageSize [number]:** Page size for the table. If pagination enabled the page size is the rows in each page.
 ### Events
-> **dataChanged [function]** 
->> Get data change event with parameters.
->>
->> **_HTML_**
->> ```html
->>   <data-grid [pagination]="pagination" [theme]="theme"
->>                   [columnDefs]="columnDefs" [rowData]="rowData" (dataChanged)="valueChanged($event)" ></data-grid>
->>   ```
->> **_JavaScript_**
->> ```javascript
->>   valueChanged (valueChanged){
->>         console.log("Row: ",valueChanged.row,"Column: ",valueChanged.column, "Data: ",,valueChanged.data );
->>       }
->>   ```
+#### dataChanged [event] 
+Get data change event with parameters.
+
+**_HTML_**
+```html
+  <data-grid [pagination]="pagination" [theme]="theme"
+                  [columnDefs]="columnDefs" [rowData]="rowData" (dataChanged)="valueChanged($event)" ></data-grid>
+  ```
+ **_JavaScript_**
+ ```javascript
+   valueChanged (valueChanged){
+         console.log("Row: ",valueChanged.row,"Column: ",valueChanged.column, "Data: ",,valueChanged.data );
+       }
+   ```
 ### Themes
 * **theme [string]:** Themebased table. The available themes are as follows
 1. Matrial Theme (metrial-theme)
 2. Dark Theme (dark-theme)
 3. Standard Theme (standard-theme)
 4. Red Theme (red-theme)
-### Search
-* **commonSearch [boolean]:** Enable common search for the table.
 ### Column Definitions
 #### Mandatory Options
 * **headerName [string]:** Header name of the particular column
@@ -129,5 +129,4 @@ rowData: [
 2. Unzip and open CMD and type npm start.
 
 # Future Timeline
-1. Ability to render remote data.
 2. Make more fast and smooth.
