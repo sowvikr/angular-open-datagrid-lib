@@ -55,8 +55,26 @@ Get data change event with parameters.
          console.log("Row: ",valueChanged.row,"Column: ",valueChanged.column, "Data: ",,valueChanged.data );
        }
    ```
+#### dataFiltered [event] 
+Get data change event with parameters.
+
+**_HTML_**
+```html
+  <data-grid [pagination]="pagination" [theme]="theme"
+                  [columnDefs]="columnDefs" [rowData]="rowData" (dataFiltered)="filterChanged($event)" ></data-grid>
+  ```
+ **_JavaScript_**
+ ```javascript
+   filterChanged (filterChanged){
+         console.log("IsCommon: ",filterChanged.isCommon, "Column: ",filterChanged.column, "Data: ",filterChanged.filterOptions );
+       }
+   ```
+   ##### Filter Change Event Parameters
+   **_isCommon[boolean]:_** If filter triggered through common filter.
+   **_column[number]:_** If the filter tiggered from any particular column. This field exists if only _isCommon=false_.
+   **_data[Array]:_** Filter values.
 ### Themes
-* **theme [string]:** Themebased table. The available themes are as follows
+* **theme [string]:** Theme based table. The available themes are as follows
 1. Matrial Theme (metrial-theme)
 2. Dark Theme (dark-theme)
 3. Standard Theme (standard-theme)

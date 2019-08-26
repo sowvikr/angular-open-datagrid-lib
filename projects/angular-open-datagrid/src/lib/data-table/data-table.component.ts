@@ -62,6 +62,12 @@ interface  DataChangeEventData {
   data: any
 }
 
+interface  DataFilteredEventData {
+  column?: number,
+  isCommon: boolean,
+  filterOptions: any
+}
+
 
 @Component({
   selector: 'data-grid',
@@ -87,6 +93,7 @@ export class DataTableComponent implements OnInit {
 
 
   @Output() dataChanged = new EventEmitter<DataChangeEventData>();
+  @Output() dataFiltered = new EventEmitter<DataFilteredEventData>();
   @Input() pagination;
   private pageSize;
   public dragTheme;
@@ -211,8 +218,8 @@ export class DataTableComponent implements OnInit {
     }
   }
 
-  public onOutsideClick(event){
-    if(event.target.className === "options-menu button button-options" ||
+  public onOutsideClick(event) {
+    if (event.target.className === "options-menu button button-options" ||
       event.target.className === "fa fa-bars" ||
       event.target.className === "checkmark" ||
       event.srcElement.id === "commonCacheCheckbox" ||
@@ -314,6 +321,8 @@ export class DataTableComponent implements OnInit {
 
 // Filters data based on CONTAINS.
   filter(column, text) {
+    let filterEventData:DataFilteredEventData = {column: column, filterOptions: [text], isCommon: false};
+    this.dataFiltered.emit(filterEventData);
     this.FilterData[column] = this.FilterData[column] || {values: []};
     this.FilterData[column].values = [{
       operator: FilterService.OR,
@@ -356,6 +365,11 @@ export class DataTableComponent implements OnInit {
   checkedColumnFilter(filterEventArgs) {
 
     this.FilterData[filterEventArgs.column].values = [];
+    let filterEventData:DataFilteredEventData = {
+      isCommon: false,
+      column: filterEventArgs.column,
+      filterOptions: filterEventArgs.filteredData
+    };
     for (let i = 0; i < filterEventArgs.filteredData.length; ++i) {
       this.FilterData[filterEventArgs.column].values.push({
         comparator: StringUtilsService.equals,
@@ -364,6 +378,7 @@ export class DataTableComponent implements OnInit {
       });
       this.FilterData[filterEventArgs.column].filterApplied = this.cacheFilter;
     }
+    this.dataFiltered.emit(filterEventData);
     this.applyFilter(this.FilterData, this.TableRows);
   }
 
@@ -536,7 +551,8 @@ export class DataTableComponent implements OnInit {
    * @param text: String to be searched across the table data.
    */
   onCommonFilter(text) {
-
+    let filteredEventData:DataFilteredEventData = {filterOptions: [text], isCommon: true};
+    this.dataFiltered.emit(filteredEventData);
     if (text === undefined || text === "") {
       for (let i = 0; i < this.columnDefs.length; ++i) {
         if (!this.FilterData[i]) {

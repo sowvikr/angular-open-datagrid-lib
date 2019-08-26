@@ -6,6 +6,9 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./red-theme.component.scss']
 })
 export class RedThemeComponent implements OnInit {
+  filterChanged (valueChanged){
+    console.log("Change Triggered",valueChanged);
+  }
   dataTables: Array<any> = [
     {
       pagination: true, theme: 'red-theme',
