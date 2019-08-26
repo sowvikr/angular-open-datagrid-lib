@@ -70,9 +70,13 @@ Get data change event with parameters.
        }
    ```
    ##### Filter Change Event Parameters
+   
    **_isCommon[boolean]:_** If filter triggered through common filter.
+   
    **_column[number]:_** If the filter tiggered from any particular column. This field exists if only _isCommon=false_.
+   
    **_data[Array]:_** Filter values.
+   
 ### Themes
 * **theme [string]:** Theme based table. The available themes are as follows
 1. Matrial Theme (metrial-theme)
