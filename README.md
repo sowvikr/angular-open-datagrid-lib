@@ -77,6 +77,7 @@ Get data change event with parameters.
    
    **_data[Array]:_** Filter values.
    
+   
 #### dataSorted [event] 
 Get column sort event with parameters.
 
@@ -92,8 +93,10 @@ Get column sort event with parameters.
        }
    ```
    ##### Sorted Event Parameters
-   **_column[number]:_** ISort tiggered column. 
+   **_column[number]:_** Sort tiggered column. 
+   
    **_type[string]:_** Sort type ascending(ASC) or descending (DESC).
+   
 ### Themes
 * **theme [string]:** Theme based table. The available themes are as follows
 1. Matrial Theme (metrial-theme)
