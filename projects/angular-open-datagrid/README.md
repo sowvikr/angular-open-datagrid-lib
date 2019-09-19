@@ -73,6 +73,24 @@ Get data change event with parameters.
    **_isCommon[boolean]:_** If filter triggered through common filter.
    **_column[number]:_** If the filter tiggered from any particular column. This field exists if only _isCommon=false_.
    **_data[Array]:_** Filter values.
+   
+#### dataSorted [event] 
+Get column sort event with parameters.
+
+**_HTML_**
+```html
+  <data-grid [pagination]="pagination" [theme]="theme"
+                  [columnDefs]="columnDefs" [rowData]="rowData" (dataSorted)="shortChanged($event)" ></data-grid>
+  ```
+ **_JavaScript_**
+ ```javascript
+   shortChanged (eventArgs){
+         console.log("Column: ",eventArgs.column, "Type: ",eventArgs.type );
+       }
+   ```
+   ##### Filter Change Event Parameters
+   **_column[number]:_** ISort tiggered column. 
+   **_type[string]:_** Sort type ascending(ASC) or descending (DESC).
 ### Themes
 * **theme [string]:** Theme based table. The available themes are as follows
 1. Matrial Theme (metrial-theme)

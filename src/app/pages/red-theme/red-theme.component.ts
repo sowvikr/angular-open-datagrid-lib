@@ -9,6 +9,10 @@ export class RedThemeComponent implements OnInit {
   filterChanged (valueChanged){
     console.log("Change Triggered",valueChanged);
   }
+
+  shortChanged(eventArgs){
+    console.log("Change Triggered", eventArgs);
+  }
   dataTables: Array<any> = [
     {
       pagination: true, theme: 'red-theme',

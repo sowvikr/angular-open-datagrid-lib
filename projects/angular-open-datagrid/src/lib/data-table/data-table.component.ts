@@ -68,6 +68,11 @@ interface  DataFilteredEventData {
   filterOptions: any
 }
 
+interface  DataSortedEventData {
+  column: number,
+  type: string,
+}
+
 
 @Component({
   selector: 'data-grid',
@@ -94,6 +99,7 @@ export class DataTableComponent implements OnInit {
 
   @Output() dataChanged = new EventEmitter<DataChangeEventData>();
   @Output() dataFiltered = new EventEmitter<DataFilteredEventData>();
+  @Output() dataSorted = new EventEmitter<DataSortedEventData>();
   @Input() pagination;
   private pageSize;
   public dragTheme;
@@ -458,6 +464,8 @@ export class DataTableComponent implements OnInit {
     const that:this = this;
     // Sort te table.
     this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
+    let sortEventData:DataSortedEventData = {column: column, type: sortState ? "ASC" : "DESC"};
+    this.dataSorted.emit(sortEventData);
     this.pagedRows();
     this.setPagedRow(this.CurrentPage);
     this.contextMenuData = [];
