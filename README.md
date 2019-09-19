@@ -70,8 +70,11 @@ Get data change event with parameters.
        }
    ```
    ##### Filter Change Event Parameters
+   
    **_isCommon[boolean]:_** If filter triggered through common filter.
+   
    **_column[number]:_** If the filter tiggered from any particular column. This field exists if only _isCommon=false_.
+   
    **_data[Array]:_** Filter values.
    
 #### dataSorted [event] 
@@ -88,7 +91,7 @@ Get column sort event with parameters.
          console.log("Column: ",eventArgs.column, "Type: ",eventArgs.type );
        }
    ```
-   ##### Filter Change Event Parameters
+   ##### Sorted Event Parameters
    **_column[number]:_** ISort tiggered column. 
    **_type[string]:_** Sort type ascending(ASC) or descending (DESC).
 ### Themes
