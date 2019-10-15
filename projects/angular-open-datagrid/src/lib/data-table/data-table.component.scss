@@ -543,7 +543,7 @@ table.dataTable {
     }
   }
 
-  @extend .light-theme.dataTable;
+  @extend .light-theme, .dataTable;
 }
 
 .cdk-drag-preview {
