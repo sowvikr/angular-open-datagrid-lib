@@ -38,7 +38,7 @@ export class InlineEditComponent implements OnInit {
   @Output() rightClicked = new EventEmitter<ContextMenuArgs>();
   @Input() theme:string;
 
-  @ViewChild('name') vc:ElementRef;
+  @ViewChild('name', { static: false }) vc:ElementRef;
 
   public isEdit = false;
   public isCombobox = false;

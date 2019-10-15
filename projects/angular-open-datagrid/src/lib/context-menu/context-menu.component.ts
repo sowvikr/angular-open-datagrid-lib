@@ -105,7 +105,7 @@ export class ContextMenuComponent implements OnInit {
      csvExporter.generateCsv(this.rowData);    }
      }
   ];
-  @ViewChild('contextMenu') contextMenu:ElementRef;
+  @ViewChild('contextMenu', { static: true }) contextMenu:ElementRef;
 
 
   copyTextToClipboard(text, clipboardService) {
