@@ -10,6 +10,9 @@ export class DarkThemeComponent implements OnInit {
   valueChanged (valueChanged){
     console.log("Change Triggered",valueChanged);
   }
+  columnRearranged(eventArgs){
+    console.log("Change Triggered; Column:",eventArgs.column, " Moved To: ", eventArgs.movedTo);
+  }
 
   dataTables: Array<any> = [
     {

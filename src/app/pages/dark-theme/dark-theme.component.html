@@ -1,5 +1,6 @@
 
 <div *ngFor="let dataTable of dataTables">
   <data-grid [pagination]="dataTable.pagination" [theme]="dataTable.theme"
-                  [columnDefs]="dataTable.columnDefs" [rowData]="dataTable.rowData" (dataChanged)="valueChanged($event)"></data-grid>
+                  [columnDefs]="dataTable.columnDefs" [rowData]="dataTable.rowData" (dataChanged)="valueChanged($event)"
+             (columnRearranged)="columnRearranged($event)"></data-grid>
 </div>

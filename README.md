@@ -96,7 +96,27 @@ Get column sort event with parameters.
    **_column[number]:_** Sort tiggered column. 
    
    **_type[string]:_** Sort type ascending(ASC) or descending (DESC).
+
+#### columnRearranged [event] 
+Get column re-arrange event with parameters.
+
+**_HTML_**
+```html
+  <data-grid [pagination]="pagination" [theme]="theme"
+                  [columnDefs]="columnDefs" [rowData]="rowData" (columnRearranged)="columnRearranged($event)" ></data-grid>
+  ```
+ **_JavaScript_**
+ ```javascript
+     columnRearranged(eventArgs){
+       console.log("Change Triggered; Column:",eventArgs.column, " Moved To: ", eventArgs.movedTo);
+     }
+       
+   ```
+   ##### Re-arrange Event Parameters
+   **_column[number]:_** Re-arranged column number. 
    
+   **_movedTo[number]:_** Final column index of the column.
+
 ### Themes
 * **theme [string]:** Theme based table. The available themes are as follows
 1. Matrial Theme (metrial-theme)

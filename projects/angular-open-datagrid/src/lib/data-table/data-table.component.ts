@@ -67,10 +67,13 @@ interface  DataFilteredEventData {
   isCommon: boolean,
   filterOptions: any
 }
-
 interface  DataSortedEventData {
   column: number,
   type: string,
+}
+interface  ColumnRearrangedEventData {
+  column: number,
+  movedTo: number,
 }
 
 
@@ -100,6 +103,7 @@ export class DataTableComponent implements OnInit {
   @Output() dataChanged = new EventEmitter<DataChangeEventData>();
   @Output() dataFiltered = new EventEmitter<DataFilteredEventData>();
   @Output() dataSorted = new EventEmitter<DataSortedEventData>();
+  @Output() columnRearranged = new EventEmitter<ColumnRearrangedEventData>();
   @Input() pagination;
   private pageSize;
   public dragTheme;
@@ -338,21 +342,6 @@ export class DataTableComponent implements OnInit {
     this.applyFilter(this.FilterData, this.TableRows);
   }
 
-  /*
-   private getFilteredValue(column:number, filterOptions:Array<FilterOptions>, data:string) {
-   let filtered = false;
-   if (!filterOptions[column].values.length) {
-   return true;
-   }
-   for (let i = 0; i < filterOptions[column].values.length; ++i) {
-   if (filterOptions[column].operator == 'or') {
-   filtered = filtered || filterOptions[column].comparator.call(data, filterOptions[column].values[i])
-   }
-   }
-   return filtered;
-   }
-   */
-
 
   private applyFilter(filterData:Array<FilterOptions>, tableRows:Array<any>) {
     let result = this.filterService.filter(filterData, tableRows);
@@ -463,7 +452,7 @@ export class DataTableComponent implements OnInit {
   private applySort(column:number, sortState:boolean) {
     const that:this = this;
     // Sort te table.
-    this.TableRows.sort((a, b) => that.sortFunction(a, b, column, sortState));
+    this.TableRows.sort((a, b) => DataTableComponent.sortFunction(a, b, column, sortState));
     let sortEventData:DataSortedEventData = {column: column, type: sortState ? "ASC" : "DESC"};
     this.dataSorted.emit(sortEventData);
     this.pagedRows();
@@ -472,7 +461,7 @@ export class DataTableComponent implements OnInit {
   }
 
 // Sort function
-  private sortFunction(a, b, columnValue, isAsc) {
+  private static sortFunction(a, b, columnValue, isAsc) {
     if (a.data[columnValue] === b.data[columnValue]) {
       return 0;
     } else if (isAsc) {
@@ -545,7 +534,7 @@ export class DataTableComponent implements OnInit {
   }
 
 
-  private getCommonFiliterIndex(filterDataValue:Array<FilterOption>):number {
+  private static getCommonFiliterIndex(filterDataValue:Array<FilterOption>):number {
     for (let i = 0; i < filterDataValue.length; ++i) {
       if (filterDataValue[i].isCommon) {
         return i;
@@ -566,7 +555,7 @@ export class DataTableComponent implements OnInit {
         if (!this.FilterData[i]) {
           continue;
         }
-        let index = this.getCommonFiliterIndex(this.FilterData[i].values);
+        let index = DataTableComponent.getCommonFiliterIndex(this.FilterData[i].values);
         if (index >= 0) {
           this.FilterData[i].values.splice(index, 1);
         }
@@ -575,7 +564,7 @@ export class DataTableComponent implements OnInit {
     else {
       for (let i = 0; i < this.columnDefs.length; ++i) {
         this.FilterData[i] = this.FilterData[i] || {values: []};
-        let index = this.getCommonFiliterIndex(this.FilterData[i].values);
+        let index = DataTableComponent.getCommonFiliterIndex(this.FilterData[i].values);
         if (index >= 0) {
           this.FilterData[i].values[index].value = text;
         }
@@ -739,10 +728,11 @@ export class DataTableComponent implements OnInit {
       }
     }
     this.ref.detectChanges();
+    this.columnRearranged.emit({column:previousIndex, movedTo:currentIndex});
   }
 
   swapped(event:any) {
-    let clientWidth = (event.container.element.nativeElement.clientWidth / this.columnDefs.length) - 10
+    let clientWidth = (event.container.element.nativeElement.clientWidth / this.columnDefs.length) - 10;
     this.Moved = [];
     if (this.previousIndex === undefined)
       this.previousIndex = event.previousIndex;
@@ -773,31 +763,6 @@ export class DataTableComponent implements OnInit {
 
   pasteData(pasteData:Array<Array<any>>) {
     let pasteRow = 0, pasteColumn = 0, prevCol;
-    /*
-     for (let i = 0; i < this.contextMenuData.length; ++i) {
-     if (!this.contextMenuData[i])
-     continue;
-     let row = this.contextMenuData[i];
-     for (let j = 0; j < row.length; ++j) {
-     if (!row[j]) {
-     continue;
-     }
-     if (!pasteData[pasteRow][pasteColumn]) {
-     pasteColumn++;
-     continue;
-     }
-     this.PagedRows[i].data[j] = pasteData[pasteRow][pasteColumn];
-     if (!prevCol) {
-     prevCol = j;
-     }
-     else if (prevCol !== j) {
-     pasteColumn++;
-     prevCol = j;
-     }
-     }
-     pasteRow++;
-     }
-     */
     let startRow, startColumn;
     for (let i = 0; i < this.contextMenuData.length; ++i) {
       if (!this.contextMenuData[i])
