@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/angular-open-datagrid.svg)](https://badge.fury.io/js/angular-open-datagrid)
+
 # AngularOpenDatagrid
 ### Demo
 ![Preview](https://raw.githubusercontent.com/sowvikr/angular-open-datagrid-lib/master/AngularOpenDatagridLib.gif)
